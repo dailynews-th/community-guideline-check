@@ -453,7 +453,7 @@ kbd{font:600 12px var(--f-mono);border:1px solid var(--line);border-bottom-width
           <div class="counts" id="counts"></div>
           <div class="btns">
             <button class="btn primary" id="btnPaste" type="button">วาง</button>
-            <button class="btn" id="btnClean" type="button" title="ลบ ADVERTISEMENT ลิงก์แนบท้ายจากเว็บข่าว และบรรทัดว่างที่ซ้ำ ออกจากข้อความในช่องต้นฉบับ">กรองขยะจากเว็บ</button>
+            <button class="btn" id="btnClean" type="button" title="ลบคำว่า ADVERTISEMENT ข้อความแนบท้ายอย่าง &quot;... สามารถติดตามต่อได้ที่ : ลิงก์&quot; และบรรทัดว่างที่ซ้ำ ออกจากข้อความในช่องต้นฉบับ">กรองข้อความ</button>
             <button class="btn" id="btnSample" type="button">ใส่ข่าวตัวอย่าง</button>
             <button class="btn" id="btnCopy" type="button">คัดลอกข้อความ</button>
             <button class="btn" id="btnClear" type="button">ล้าง</button>
@@ -1704,16 +1704,19 @@ $('#urlForm').addEventListener('submit',e=>{ e.preventDefault(); importUrl($('#u
 /* ---------- Paste + web-junk cleaner ---------- */
 const JUNK_LINE=/^\s*(?:ADVERTISEMENT|Advertisement|ADVERTISING|Advertising|SPONSORED|Sponsored|โฆษณา|Scroll to continue with content|ADVERTISEMENT - SCROLL TO CONTINUE READING)\s*$/;
 const ATTR_LINE=/^\s*(?:\.{2,}|…)?\s*(?:สามารถ)?(?:ติดตาม|อ่าน)(?:ข่าว)?(?:ต่อ|เพิ่มเติม|ฉบับเต็ม)?(?:ได้)?(?:ที่)?\s*:?\s*(?:\[[^\]]*\]\()?https?:\/\/\S+?\)?\s*$|^\s*(?:\.{2,}|…)?\s*(?:Read more(?: at)?|Source|ที่มา|Copied from)\s*:?\s*(?:\[[^\]]*\]\()?https?:\/\/\S+?\)?\s*$/i;
+const ATTR_TAIL=/\s*(?:\.{2,}|…)?\s*(?:(?:สามารถ)?(?:ติดตาม|อ่าน)(?:ข่าว)?(?:ต่อ|เพิ่มเติม|ฉบับเต็ม)?(?:ได้)?(?:ที่)?|Read more(?: at)?|Source|ที่มา|Copied from)\s*:?\s*(?:\[[^\]]*\]\()?https?:\/\/\S+?\)?\s*$/i;
 function cleanWebText(src){
-  let ads=0, attr=0;
+  let ads=0, attr=0, truncated=false;
   let t=String(src).replace(/\r\n?/g,'\n').replace(/[\u200B\u200C\u200D\u2060\uFEFF]/g,'').replace(/\u00A0/g,' ');
   // markdown-style links [url](url) -> url
   t=t.replace(/\[(https?:\/\/[^\]\s]+)\]\((https?:\/\/[^)\s]+)\)/g,'$2');
-  const lines=t.split('\n').filter(l=>{ if(JUNK_LINE.test(l)){ ads++; return false; } if(ATTR_LINE.test(l)){ attr++; return false; } return true; });
+  const lines=t.split('\n').filter(l=>{ if(JUNK_LINE.test(l)){ ads++; return false; } if(ATTR_LINE.test(l)){ attr++; return false; } return true; })
+    // attribution glued to the end of a text line: "…ข้อความ... สามารถติดตามต่อได้ที่ : https://…"
+    .map(l=>{ const r=l.replace(ATTR_TAIL,''); if(r!==l){ attr++; truncated=true; } return r; });
   t=lines.map(l=>l.replace(/[ \t]+$/,'')).join('\n').replace(/\n{3,}/g,'\n\n').replace(/^\n+|\n+$/g,'');
-  return {text:t,ads,attr};
+  return {text:t,ads,attr,truncated};
 }
-function cleanMsg(r){ const parts=[]; if(r.ads) parts.push(`โฆษณา ${r.ads} บรรทัด`); if(r.attr) parts.push(`ลิงก์แนบท้าย ${r.attr} บรรทัด`); return parts.length?'กรองออก: '+parts.join(' และ '):''; }
+function cleanMsg(r){ const parts=[]; if(r.ads) parts.push(`โฆษณา ${r.ads} บรรทัด`); if(r.attr) parts.push(`ลิงก์แนบท้าย ${r.attr} จุด`); return (parts.length?'กรองออก: '+parts.join(' และ '):'')+(r.truncated?' · เว็บต้นทางอาจตัดข้อความที่คัดลอกให้สั้นลง ตรวจว่าเนื้อหาครบ':''); }
 let autoClean=LS.get('pc_autoclean',true)!==false; $('#autoClean').checked=autoClean;
 $('#autoClean').addEventListener('change',e=>{ autoClean=e.target.checked; LS.set('pc_autoclean',autoClean); toast(autoClean?'เปิดการกรองอัตโนมัติเมื่อวางแล้ว':'ปิดการกรองอัตโนมัติเมื่อวางแล้ว'); });
 function setText(v,msg){
