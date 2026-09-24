@@ -1,0 +1,1431 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>ด่านตรวจโพสต์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Noto+Serif+Thai:wght@600;700&display=swap">
+<style>
+:root{
+  --paper:#F3F5F8; --surface:#FFFFFF; --sunk:#EBEEF3; --ink:#17202C; --muted:#586374; --line:#D9DEE6;
+  --pencil:#2A4FC4; --pencil-bg:#E4EAFB; --on-pencil:#FFFFFF;
+  --high:#B83227; --high-bg:#FBE3E0; --high-mark:rgba(214,58,44,.24);
+  --warn:#A8650A; --warn-bg:#FCEFD9; --warn-mark:rgba(230,150,20,.28);
+  --info:#51637A; --info-bg:#E6EBF1; --info-mark:rgba(42,79,196,.16);
+  --ok:#277348; --ok-bg:#DDF1E5;
+  --reach:#7B45B8; --reach-bg:#F1E8FA; --reach-mark:rgba(123,69,184,.10);
+  --c-fb:#2F55D4; --c-ig:#C2307D; --c-yt:#D0281E; --c-tt:#0B8F8A; --c-x:#1B1F24; --c-bs:#0E86D4;
+  --shadow:0 1px 2px rgba(23,32,44,.06),0 4px 16px rgba(23,32,44,.05);
+  --f-body:"IBM Plex Sans Thai","Noto Sans Thai","Leelawadee UI","Thonburi",system-ui,sans-serif;
+  --f-disp:"Noto Serif Thai","IBM Plex Sans Thai",serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#0F131A; --surface:#171C25; --sunk:#11151C; --ink:#E4E8EE; --muted:#9AA4B3; --line:#2A3240;
+    --pencil:#86A0FF; --pencil-bg:#1E2848; --on-pencil:#0B1020;
+    --high:#FF7A6B; --high-bg:#3A1C1A; --high-mark:rgba(255,110,95,.30);
+    --warn:#F2B452; --warn-bg:#382A12; --warn-mark:rgba(242,180,82,.28);
+    --info:#A9B6C8; --info-bg:#222A36; --info-mark:rgba(134,160,255,.22);
+    --ok:#62CF8F; --ok-bg:#15301F;
+    --reach:#C49BFF; --reach-bg:#2B2040; --reach-mark:rgba(196,155,255,.14); --c-fb:#7C98FF; --c-ig:#F07AB5; --c-yt:#FF7B6E; --c-tt:#3FD4CC; --c-x:#E6E9EE; --c-bs:#5CB8FF;
+    --shadow:0 1px 2px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0F131A; --surface:#171C25; --sunk:#11151C; --ink:#E4E8EE; --muted:#9AA4B3; --line:#2A3240;
+  --pencil:#86A0FF; --pencil-bg:#1E2848; --on-pencil:#0B1020;
+  --high:#FF7A6B; --high-bg:#3A1C1A; --high-mark:rgba(255,110,95,.30);
+  --warn:#F2B452; --warn-bg:#382A12; --warn-mark:rgba(242,180,82,.28);
+  --info:#A9B6C8; --info-bg:#222A36; --info-mark:rgba(134,160,255,.22);
+  --ok:#62CF8F; --ok-bg:#15301F;
+  --reach:#C49BFF; --reach-bg:#2B2040; --reach-mark:rgba(196,155,255,.14); --c-fb:#7C98FF; --c-ig:#F07AB5; --c-yt:#FF7B6E; --c-tt:#3FD4CC; --c-x:#E6E9EE; --c-bs:#5CB8FF;
+  --shadow:0 1px 2px rgba(0,0,0,.3);
+}
+/* the app's own theme choice wins over the viewer's theme */
+html:root[data-pc-theme="light"]{color-scheme:light;
+  --paper:#F3F5F8; --surface:#FFFFFF; --sunk:#EBEEF3; --ink:#17202C; --muted:#586374; --line:#D9DEE6;
+  --pencil:#2A4FC4; --pencil-bg:#E4EAFB; --on-pencil:#FFFFFF;
+  --high:#B83227; --high-bg:#FBE3E0; --high-mark:rgba(214,58,44,.24);
+  --warn:#A8650A; --warn-bg:#FCEFD9; --warn-mark:rgba(230,150,20,.28);
+  --info:#51637A; --info-bg:#E6EBF1; --info-mark:rgba(42,79,196,.16);
+  --ok:#277348; --ok-bg:#DDF1E5;
+  --reach:#7B45B8; --reach-bg:#F1E8FA; --reach-mark:rgba(123,69,184,.10);
+  --c-fb:#2F55D4; --c-ig:#C2307D; --c-yt:#D0281E; --c-tt:#0B8F8A; --c-x:#1B1F24; --c-bs:#0E86D4;
+  --shadow:0 1px 2px rgba(23,32,44,.06),0 4px 16px rgba(23,32,44,.05);
+  --f-body:"IBM Plex Sans Thai","Noto Sans Thai","Leelawadee UI","Thonburi",system-ui,sans-serif;
+  --f-disp:"Noto Serif Thai","IBM Plex Sans Thai",serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+html:root[data-pc-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0F131A; --surface:#171C25; --sunk:#11151C; --ink:#E4E8EE; --muted:#9AA4B3; --line:#2A3240;
+  --pencil:#86A0FF; --pencil-bg:#1E2848; --on-pencil:#0B1020;
+  --high:#FF7A6B; --high-bg:#3A1C1A; --high-mark:rgba(255,110,95,.30);
+  --warn:#F2B452; --warn-bg:#382A12; --warn-mark:rgba(242,180,82,.28);
+  --info:#A9B6C8; --info-bg:#222A36; --info-mark:rgba(134,160,255,.22);
+  --ok:#62CF8F; --ok-bg:#15301F;
+  --reach:#C49BFF; --reach-bg:#2B2040; --reach-mark:rgba(196,155,255,.14); --c-fb:#7C98FF; --c-ig:#F07AB5; --c-yt:#FF7B6E; --c-tt:#3FD4CC; --c-x:#E6E9EE; --c-bs:#5CB8FF;
+  --shadow:0 1px 2px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6}
+.wrap{max-width:1280px;margin:0 auto;padding:20px 20px 48px}
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:20px}
+.brand h1{font-family:var(--f-disp);font-size:28px;line-height:1.25;margin:0;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+.brand h1 .pen{color:var(--pencil)}
+.brand p{margin:4px 0 0;color:var(--muted);font-size:14px;max-width:62ch}
+.stamp{font-family:var(--f-mono);font-size:12px;color:var(--muted);border:1px dashed var(--line);padding:4px 10px;border-radius:4px}
+
+.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:20px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}
+.panel-h{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line)}
+.panel-h h2{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0;font-weight:600}
+.panel-b{padding:14px 16px}
+
+/* platform chips */
+.plats{display:flex;flex-wrap:wrap;gap:6px}
+.pchip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;padding:4px 11px 4px 8px;font:500 13px var(--f-body);cursor:pointer}
+.pchip .dot{width:16px;height:16px;border-radius:4px;display:grid;place-items:center;font:600 10px var(--f-mono);background:var(--sunk);color:var(--muted)}
+.pchip[aria-pressed="true"]{border-color:var(--pc);color:var(--ink);background:var(--surface);box-shadow:inset 0 0 0 1px var(--pc)}
+.pchip[aria-pressed="true"] .dot{background:var(--pc);color:var(--surface)}
+.pchip .dot{transition:background .12s}
+.pchip:focus-visible,button:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--pencil);outline-offset:2px}
+
+/* editor */
+.editor{position:relative;border:1px solid var(--line);border-radius:8px;background:var(--surface);margin-top:12px}
+.editor:focus-within{border-color:var(--pencil)}
+.editor .bd,.editor textarea{font:400 16px/1.75 var(--f-body);padding:14px 16px;margin:0;border:0;white-space:pre-wrap;overflow-wrap:break-word;word-break:normal;letter-spacing:0;tab-size:4}
+.editor .bd{position:absolute;inset:0;overflow:hidden;color:transparent;pointer-events:none;scrollbar-gutter:stable}
+.editor textarea{position:relative;display:block;width:100%;min-height:360px;resize:vertical;background:transparent;color:var(--ink);outline:none;overflow-y:auto;scrollbar-gutter:stable}
+.bd mark{color:transparent;border-radius:3px;padding:0}
+.bd mark.s3{background:var(--high-mark);box-shadow:inset 0 -2px 0 var(--high)}
+.bd mark.s2{background:var(--warn-mark);box-shadow:inset 0 -2px 0 var(--warn)}
+.bd mark.s1{background:var(--info-mark)}
+.bd mark.rc{background:var(--reach-mark);box-shadow:inset 0 -2px 0 transparent;background-image:linear-gradient(90deg,var(--reach) 50%,transparent 0);background-size:6px 2px;background-repeat:repeat-x;background-position:0 100%}
+.bd .cut{position:relative;display:inline;width:0}
+.bd .cut::before{content:"";position:absolute;left:-1px;top:.1em;width:2px;height:1.55em;background:var(--pc,var(--high));border-radius:1px}
+.bd .cut::after{content:"¶ " attr(data-l);position:absolute;left:1px;top:-.95em;font:600 10px/1.35 var(--f-mono);color:var(--surface);background:var(--pc,var(--high));padding:0 4px;border-radius:3px;white-space:nowrap;letter-spacing:0}
+.bd .cut.alt::after{top:auto;bottom:-1.05em}
+.bd mark.lg{background:transparent;box-shadow:inset 0 -2px 0 var(--pencil)}
+.bd mark.lg.s2,.bd mark.lg.s3{background:transparent}
+
+.ed-foot{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;margin-top:10px}
+.counts{font:12px var(--f-mono);color:var(--muted);display:flex;gap:10px;flex-wrap:wrap}
+.counts .tip{padding:1px 6px;border:1px dashed var(--line);border-radius:5px}
+.counts .tip:hover{border-color:var(--muted);color:var(--ink)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font-family:var(--f-body)}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:7px;padding:7px 12px;font-size:14px;font-weight:500;cursor:pointer}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--pencil);border-color:var(--pencil);color:var(--on-pencil)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn[disabled]{opacity:.55;cursor:default}
+.hint{font-size:13px;color:var(--muted);margin:10px 0 0}
+.hint b{color:var(--ink);font-weight:600}
+
+/* AI */
+.ai{margin-top:16px;border-top:1px dashed var(--line);padding-top:14px}
+.ai-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ai-status{font-size:13px;color:var(--muted)}
+.ai-sum{margin-top:10px;padding:10px 12px;background:var(--pencil-bg);border-radius:8px;font-size:14px}
+.ai-sum h3{margin:0 0 4px;font-size:13px;color:var(--pencil)}
+.ai-sum p{margin:0}
+
+/* verdict board */
+.board{display:flex;flex-direction:column}
+.vrow{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line)}
+.vrow:last-child{border-bottom:0}
+.vrow.off{opacity:.45}
+.vname{font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px}
+.vname .dot{width:18px;height:18px;border-radius:4px;display:grid;place-items:center;font:600 10px var(--f-mono);background:var(--pc,var(--sunk));color:var(--surface)}
+.vrow.off .vname .dot{background:var(--sunk);color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.l0{color:var(--ok);background:var(--ok-bg)}
+.l1{color:var(--info);background:var(--info-bg)}
+.l2{color:var(--warn);background:var(--warn-bg)}
+.l3{color:var(--high);background:var(--high-bg)}
+.lx{color:var(--muted);background:var(--sunk)}
+.vmeta{grid-column:1/-1;font-size:12.5px;color:var(--muted);text-align:left;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.vmeta.over{color:var(--high);font-weight:500}
+.vlinks{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+.vlinks a{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:500;padding:2px 8px;border-radius:5px;text-decoration:none;border:1px solid transparent}
+.vlinks a:hover{border-color:currentColor;text-decoration:underline;text-underline-offset:2px}
+.vlinks a:focus-visible{outline:2px solid var(--pencil);outline-offset:1px}
+.vlinks svg{width:11px;height:11px;flex:none}
+.vwhy{grid-column:1/-1;font-size:13px;color:var(--muted);line-height:1.5}
+@media (max-width:480px){.vrow{grid-template-columns:1fr auto}.vmeta{grid-column:1/-1;text-align:left}}
+
+/* tabs */
+.tabs{display:flex;gap:4px;padding:6px;background:var(--sunk);border-radius:8px}
+.tab{flex:1;border:0;background:transparent;color:var(--muted);padding:6px 8px;border-radius:6px;font-size:13.5px;font-weight:500;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.tab .n{font:500 11px var(--f-mono);margin-left:4px;padding:0 6px;border-radius:999px;background:var(--line);color:var(--ink)}
+
+.list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+@media (min-width:901px){.list{max-height:72vh;overflow-y:auto;padding-right:4px}}
+.empty{padding:22px 12px;text-align:center;color:var(--muted);font-size:14px;border:1px dashed var(--line);border-radius:8px}
+.f{border:1px solid var(--line);border-left:3px solid var(--info);border-radius:8px;padding:10px 12px;background:var(--surface)}
+.f.s3{border-left-color:var(--high)}
+.f.s2{border-left-color:var(--warn)}
+.f.lang{border-left-color:var(--pencil)}
+.f.reach{border-left-color:var(--reach);border-left-style:dashed}
+.lr{color:var(--reach);background:var(--reach-bg)}
+.check.reach{color:var(--reach);background:var(--reach-bg)}
+.tag.tg{background:var(--reach-bg);color:var(--reach)}
+.reach-sum{margin:0 16px 12px;padding:9px 12px;border-radius:8px;background:var(--reach-bg);color:var(--ink);font-size:13px;line-height:1.55}
+.reach-sum b{color:var(--reach)}
+.f-top{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.f-q{font-weight:600;cursor:pointer;background:none;border:0;padding:0;color:var(--ink);font-size:14.5px;text-align:left;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.f-q:hover{text-decoration-color:var(--ink)}
+.f-cat{font-size:12px;color:var(--muted)}
+.tag{font:500 10.5px var(--f-mono);padding:1px 6px;border-radius:4px;background:var(--sunk);color:var(--muted);letter-spacing:.03em}
+.tag.ai{background:var(--pencil-bg);color:var(--pencil)}
+.tag.q{background:var(--ok-bg);color:var(--ok)}
+.f p{margin:6px 0 0;font-size:13.5px;line-height:1.55}
+.f .fix{color:var(--ink)}
+.f .fix b{font-weight:600}
+.f .law{font-size:12.5px;color:var(--muted);margin-top:6px;padding-left:10px;border-left:2px solid var(--line)}
+.pimp{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.pimp span{font-size:11.5px;padding:1px 7px;border-radius:4px}
+.pimp span b{font-family:var(--f-mono);font-weight:600;margin-right:3px}
+.f-act{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.f-act .btn{padding:3px 10px;font-size:12.5px}
+details.more{margin-top:6px}
+details.more summary{font-size:12.5px;color:var(--pencil);cursor:pointer}
+details.more ul{margin:6px 0 0;padding-left:18px;font-size:12.5px;color:var(--muted)}
+details.more a{color:var(--pencil)}
+
+.dismissed{margin-top:10px;font-size:12.5px;color:var(--muted);display:flex;gap:8px;align-items:center}
+.linkbtn{background:none;border:0;color:var(--pencil);cursor:pointer;font-size:12.5px;padding:0;text-decoration:underline}
+
+/* legend + footer */
+.legend{display:flex;flex-wrap:wrap;gap:10px 16px;font-size:12.5px;color:var(--muted);margin-top:12px}
+.legend i{display:inline-block;width:22px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px}
+.foot{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;font-size:13px;color:var(--muted)}
+.foot h3{font-size:13px;color:var(--ink);margin:0 0 6px;letter-spacing:.02em}
+.foot ul{margin:0;padding-left:18px}
+.foot a{color:var(--pencil)}
+.foot p{margin:0 0 6px;max-width:65ch}
+.wrap{zoom:var(--zoom,1)}
+.fs{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;background:var(--surface);overflow:hidden}
+.fs button{border:0;background:none;color:var(--ink);cursor:pointer;padding:5px 11px;font:600 13px var(--f-body);line-height:1.2}
+.fs button:hover:not([disabled]){background:var(--sunk)}
+.fs button[disabled]{color:var(--muted);opacity:.5;cursor:default}
+.fs .big{font-size:16px}
+.fs output{font:500 12px var(--f-mono);color:var(--muted);min-width:44px;text-align:center;border-left:1px solid var(--line);border-right:1px solid var(--line);padding:6px 4px;cursor:pointer}
+.col{display:flex;flex-direction:column;gap:20px;min-width:0}
+.top-r{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.theme-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:5px 12px 5px 6px;font:500 13px var(--f-body);cursor:pointer}
+.theme-btn .knob{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--pencil-bg);color:var(--pencil)}
+.theme-btn svg{width:14px;height:14px}
+
+/* allowlist */
+.allow-form{display:flex;gap:8px;flex-wrap:wrap}
+.allow-form input{flex:1 1 180px;min-width:0;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:7px;padding:7px 10px;font:15px var(--f-body)}
+.allow-form input:focus{outline:2px solid var(--pencil);outline-offset:1px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:4px;background:var(--sunk);border:1px solid var(--line);border-radius:6px;padding:2px 4px 2px 10px;font-size:14px}
+.chip button{border:0;background:none;color:var(--muted);cursor:pointer;width:22px;height:22px;border-radius:4px;font-size:15px;line-height:1}
+.chip button:hover{background:var(--high-bg);color:var(--high)}
+.chip .hit{font:500 10.5px var(--f-mono);color:var(--ok);margin-left:2px}
+.store-note{font-size:12.5px;color:var(--muted);margin-top:10px}
+
+/* ready-to-use versions */
+.vers{display:flex;flex-direction:column;gap:12px}
+.ver{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.ver-h{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:8px 12px;background:var(--sunk);border-bottom:1px solid var(--line)}
+.ver-h h3{margin:0;font-size:14px;font-weight:600}
+.ver-h h3 small{font-weight:400;color:var(--muted);font-size:12.5px;margin-left:6px}
+.ver-b{padding:12px;white-space:pre-wrap;font-size:15px;line-height:1.75;max-height:260px;overflow-y:auto}
+.ver-b mark{color:inherit;border-radius:3px;padding:0 1px;cursor:help}
+.ver-b mark.s3{background:var(--high-mark);box-shadow:inset 0 -2px 0 var(--high)}
+.ver-b mark.s2{background:var(--warn-mark);box-shadow:inset 0 -2px 0 var(--warn)}
+.ver-b mark.lg{background:transparent;box-shadow:inset 0 -2px 0 var(--pencil)}
+.ver-b mark.rc{background-color:var(--reach-mark);background-image:linear-gradient(90deg,var(--reach) 50%,transparent 0);background-size:6px 2px;background-repeat:repeat-x;background-position:0 100%}
+.ver-key{display:flex;flex-wrap:wrap;gap:4px 12px;padding:0 12px 10px;font-size:12px;color:var(--muted)}
+.ver-key i{display:inline-block;width:18px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.ver-b.placeholder{color:var(--muted);font-size:14px;white-space:normal}
+.ver-f{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:8px 12px;border-top:1px solid var(--line)}
+.check{font-size:12.5px;font-weight:500;display:inline-flex;align-items:center;gap:6px;padding:2px 9px;border-radius:999px}
+.check.pass{color:var(--ok);background:var(--ok-bg)}
+.check.left{color:var(--warn);background:var(--warn-bg)}
+.ver-f .btns .btn{padding:4px 10px;font-size:13px}
+.ver-note{font-size:12.5px;color:var(--muted);padding:0 12px 10px}
+.limits{margin-top:12px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.limits-h{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:7px 12px;background:var(--sunk);font-size:12.5px;color:var(--muted)}
+.limits-h b{color:var(--ink);font-weight:600}
+.limits-h .bad{color:var(--high);font-weight:600}
+.lim-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+.lim{padding:8px 12px;border-top:1px solid var(--line);border-right:1px solid var(--line);font-size:12.5px;display:flex;flex-direction:column;gap:4px;margin-right:-1px}
+.lim.off{opacity:.45}
+.lim-t{display:flex;justify-content:space-between;gap:6px;align-items:baseline}
+.lim-t b{font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:6px}
+.lim-t b::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--pc)}
+.lim{border-top:3px solid transparent}
+.lim .meter{display:flex;flex-direction:column;gap:3px}
+.lim .meter+.meter{margin-top:4px}
+.lim .m-l{display:flex;justify-content:space-between;gap:6px;font-size:11.5px;color:var(--muted)}
+.lim .m-l span:last-child{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap;flex:none}
+.lim .meter.over .m-l{color:var(--high);font-weight:500}
+.lim .meter.over .bar i{background:var(--high)}
+.lim .meter.near .bar i{background:var(--warn)}
+.lim-t span{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.lim.over .lim-t span{color:var(--high);font-weight:500}
+.bar{height:4px;border-radius:2px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ok);border-radius:2px}
+.lim.near .bar i{background:var(--warn)}
+.lim.over .bar i{background:var(--high)}
+.lim-n{color:var(--muted);font-size:11.5px;line-height:1.4}
+.lim.over .lim-n{color:var(--high)}
+.tip{position:relative;cursor:help;border-radius:4px}
+.tip:focus-visible{outline:2px solid var(--pencil);outline-offset:2px}
+.tip::after{font-family:var(--f-body);content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 8px);width:max-content;max-width:min(300px,80vw);background:var(--ink);color:var(--paper);font-size:12.5px;line-height:1.5;font-weight:400;padding:8px 10px;border-radius:7px;box-shadow:0 6px 20px rgba(0,0,0,.2);white-space:normal;opacity:0;visibility:hidden;transform:translateY(3px);transition:opacity .12s,transform .12s;z-index:20;pointer-events:none;text-align:left;letter-spacing:0;text-transform:none}
+.tip:hover::after,.tip:focus-visible::after{opacity:1;visibility:visible;transform:none}
+.legend .tip{padding:2px 4px;margin:-2px -4px}
+.f{position:relative;overflow-wrap:anywhere}
+.f .tip{position:static}
+.f .tip::after{left:10px;right:10px;width:auto;max-width:none;bottom:auto;top:2.3em}
+.tip:not(:hover):not(:focus-visible)::after{display:none}
+@media (min-width:901px){.list{overflow-x:hidden}}
+.disclaim{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--warn);background:var(--warn-bg);border-radius:8px;font-size:13px;line-height:1.55;margin-bottom:12px}
+.disclaim svg{flex:none;width:18px;height:18px;color:var(--warn);margin-top:1px}
+.disclaim b{font-weight:600}
+.cost{font-size:12.5px;color:var(--muted);margin-top:8px;display:flex;gap:6px;align-items:flex-start}
+.cost svg{flex:none;width:14px;height:14px;margin-top:3px}
+.modal{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:16px;background:rgba(10,14,20,.45)}
+.modal[hidden],[hidden]{display:none!important}
+.modal-box{zoom:var(--zoom,1);width:min(420px,100%);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:20px 20px 16px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.modal-ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:var(--high-bg);color:var(--high);margin-bottom:10px}
+.modal-ic svg{width:20px;height:20px}
+.modal-box h3{margin:0 0 6px;font-size:18px;font-weight:600}
+.modal-box p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+.modal-act{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;flex-wrap:wrap}
+.opt-group{border:0;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.opt-group legend{font-size:14px;color:var(--muted);margin-bottom:8px;padding:0}
+.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:9px;padding:10px 12px;cursor:pointer}
+.opt:hover{border-color:var(--muted)}
+.opt:has(input:checked){border-color:var(--pencil);background:var(--pencil-bg)}
+.opt input{margin-top:5px;accent-color:var(--pencil);width:16px;height:16px;flex:none}
+.opt b{display:block;font-weight:600;font-size:14.5px}
+.opt small{display:block;color:var(--muted);font-size:13px;line-height:1.5}
+.set-note{margin-top:12px!important;font-size:12.5px!important}
+.btn.danger{background:var(--high);border-color:var(--high);color:var(--surface)}
+.btn.danger:hover{filter:brightness(1.07)}
+@media (prefers-reduced-motion:no-preference){.modal:not([hidden]) .modal-box{animation:pop .14s ease-out}@keyframes pop{from{transform:scale(.97);opacity:.6}to{transform:none;opacity:1}}}
+.upd-sum{font-size:13.5px;line-height:1.6;padding:10px 12px;border-radius:8px;background:var(--sunk)}
+.upd-sum b{font-weight:600}
+.upd-sum .none{color:var(--muted)}
+.upd-list{max-height:none!important}
+.pend{border:1px solid var(--line);border-left:3px solid var(--pencil);border-radius:8px;padding:10px 12px}
+.pend.s3{border-left-color:var(--high)} .pend.s2{border-left-color:var(--warn)} .pend.rc{border-left-color:var(--reach);border-left-style:dashed}
+.pend-top{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.pend-term{font-weight:600;font-size:15px}
+.pend p{margin:6px 0 0;font-size:13px;line-height:1.55}
+.pend .src{font-size:12.5px;color:var(--muted);margin-top:6px}
+.pend .src a{color:var(--pencil)}
+.pend-act{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.pend-act .btn{padding:3px 10px;font-size:12.5px}
+.btn.ok{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.chg{padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.55}
+.chg:last-child{border-bottom:0}
+.chg b{font-weight:600}
+.chg a{color:var(--pencil)}
+.tag.upd{background:var(--ok-bg);color:var(--ok)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:8px 14px;border-radius:8px;font-size:13.5px;z-index:10}
+@media (prefers-reduced-motion:no-preference){.f{animation:in .18s ease-out}@keyframes in{from{transform:translateY(3px)}to{transform:none}}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>ด่านตรวจโพสต์<span class="pen">.</span></h1>
+      <p>ตรวจคำและประโยคเสี่ยงในข่าวและบทความภาษาไทยก่อนโพสต์ เทียบกับ Community Guidelines ของ Facebook, Instagram, YouTube, TikTok, X และ Bluesky พร้อมตรวจตัวสะกดและสำนวนภาษา</p>
+    </div>
+    <div class="top-r">
+      <div class="stamp" id="stamp" title="วันที่ตรวจแนวทางของแพลตฟอร์มครั้งล่าสุด">อ้างอิงแนวทาง ณ ก.ย. 2569</div>
+      <div class="fs" role="group" aria-label="ขนาดตัวอักษร">
+        <button type="button" id="fsDown" aria-label="ลดขนาดตัวอักษร" title="ลดขนาดตัวอักษร">A−</button>
+        <output id="fsVal" title="กลับเป็นขนาดปกติ" tabindex="0" role="button">100%</output>
+        <button type="button" id="fsUp" class="big" aria-label="เพิ่มขนาดตัวอักษร" title="เพิ่มขนาดตัวอักษร">A+</button>
+      </div>
+      <button type="button" class="theme-btn" id="btnSettings" aria-haspopup="dialog"><span class="knob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span><span>ตั้งค่า</span></button>
+      <button type="button" class="theme-btn" id="btnTheme" aria-label="สลับโหมดสว่างหรือมืด"><span class="knob" id="themeIcon"></span><span id="themeLabel">โหมดมืด</span></button>
+    </div>
+  </header>
+
+  <div class="grid">
+    <!-- LEFT: editor -->
+    <div class="col">
+    <section class="panel">
+      <div class="panel-h">
+        <h2>ต้นฉบับ</h2>
+        <div class="plats" id="plats" role="group" aria-label="แพลตฟอร์มที่จะโพสต์"></div>
+      </div>
+      <div class="panel-b">
+        <div class="editor">
+          <div class="bd" id="bd" aria-hidden="true"></div>
+          <textarea id="ta" spellcheck="false" aria-label="ข้อความที่จะโพสต์" placeholder="วางพาดหัวไว้บรรทัดแรก แล้วตามด้วยเนื้อหาข่าว…"></textarea>
+        </div>
+        <div class="ed-foot">
+          <div class="counts" id="counts"></div>
+          <div class="btns">
+            <button class="btn" id="btnSample" type="button">ใส่ข่าวตัวอย่าง</button>
+            <button class="btn" id="btnCopy" type="button">คัดลอกข้อความ</button>
+            <button class="btn" id="btnClear" type="button">ล้าง</button>
+          </div>
+        </div>
+        <div class="limits" id="limits"></div>
+        <p class="hint">ตรวจอัตโนมัติขณะพิมพ์ · <b>บรรทัดแรกถือเป็นพาดหัว</b> (ใช้เป็นชื่อคลิป YouTube / ข้อความที่คนเห็นก่อนกด "ดูเพิ่มเติม") · คลิกคำในรายการผลตรวจเพื่อไปยังตำแหน่งนั้น</p>
+        <div class="legend">
+          <span class="tip" tabindex="0" data-tip="เสี่ยงสูง — มีโอกาสสูงที่แพลตฟอร์มจะลบโพสต์ ตัดโฆษณา หรือนับเป็นการทำผิดกฎ (strike) เช่น คำเหยียด การยุยงความรุนแรง การระบุตัวผู้เยาว์ ควรแก้ก่อนโพสต์ทุกครั้ง"><i style="background:var(--high-mark);box-shadow:inset 0 -2px 0 var(--high)"></i>เสี่ยงสูง</span>
+          <span class="tip" tabindex="0" data-tip="ควรปรับ — ไม่ถึงขั้นถูกลบ แต่มีโอกาสถูกลดการมองเห็น ติดหน้าจอคำเตือน จำกัดอายุผู้ชม หรือได้โฆษณาแบบจำกัด ปรับถ้อยคำแล้วจะปลอดภัยกว่า"><i style="background:var(--warn-mark);box-shadow:inset 0 -2px 0 var(--warn)"></i>ควรปรับ</span>
+          <span class="tip" tabindex="0" data-tip="ข้อสังเกต — ใช้ในข่าวได้ตามปกติ แต่ระบบอัตโนมัติมักจับตา หรือมีข้อควรระวังด้านจริยธรรมหรือกฎหมาย ให้บรรณาธิการพิจารณาตามบริบท"><i style="background:var(--info-mark)"></i>ข้อสังเกต</span>
+          <span class="tip" tabindex="0" data-tip="ภาษา/ตัวสะกด — คำสะกดผิดตามราชบัณฑิตยสภา ไวยากรณ์ สำนวนฟุ่มเฟือย ภาษาปาก และรูปแบบการพิมพ์ ไม่มีผลต่อกฎของแพลตฟอร์ม แต่มีผลต่อความน่าเชื่อถือ"><i style="box-shadow:inset 0 -2px 0 var(--pencil)"></i>ภาษา/ตัวสะกด</span>
+          <span class="tip" tabindex="0" data-tip="กระทบการมองเห็น/โฆษณา — ไม่ผิดกฎชุมชน ใช้ในข่าวได้ แต่คำเกี่ยวกับความรุนแรง อาวุธ และความตาย ทำให้แพลตฟอร์มอาจไม่แนะนำโพสต์ (For You, Explore, Reels) หรือจำกัดโฆษณา โดยเฉพาะเมื่ออยู่ในพาดหัว ชื่อคลิป หรือแฮชแท็ก"><i style="background:var(--reach-mark);box-shadow:inset 0 -2px 0 var(--reach)"></i>กระทบการมองเห็น/โฆษณา</span>
+          <span class="tip" tabindex="0" data-tip="¶ จุดที่เกินลิมิต — ข้อความตั้งแต่จุดนี้ไปจะเกินความยาวที่แพลตฟอร์มนั้นรับได้ สีและป้ายตรงกับปุ่มแพลตฟอร์มด้านบน (YT ชื่อคลิป = บรรทัดแรกเกิน 100, YT คำอธิบาย = บรรทัดที่ 2 เป็นต้นไปเกิน 5,000)"><i style="width:2px;height:14px;background:var(--high);margin-right:8px;vertical-align:-3px"></i>¶ จุดที่เกินลิมิต</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="versPanel">
+      <div class="panel-h">
+        <h2>ฉบับแก้พร้อมใช้</h2>
+        <span class="f-cat">สร้างในหน้านี้ทันที ไม่ใช้ AI</span>
+      </div>
+      <div class="panel-b">
+        <div class="disclaim" role="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17v.01"/></svg><div><b>ฉบับแก้ทุกฉบับเป็นข้อเสนอแนะ ไม่รับประกันผล</b> ป้าย "ตรวจซ้ำแล้ว ไม่พบจุดที่ต้องแก้" หมายถึงไม่พบคำหรือรูปแบบที่ตัวตรวจรู้จักเท่านั้น ไม่ได้รับประกันว่าแพลตฟอร์มจะไม่ลบหรือจำกัดโพสต์ และไม่ใช่คำปรึกษาทางกฎหมาย ฉบับ 2 และ 3 ตัดประโยคที่เสี่ยงออกโดยอัตโนมัติ ใจความอาจขาดหรือเปลี่ยนไป ควรให้บรรณาธิการตรวจข้อเท็จจริง ชื่อ ตัวเลข และภาพประกอบก่อนโพสต์ทุกครั้ง</div></div>
+        <div class="vers" id="vers"></div>
+      </div>
+    </section>
+    </div>
+
+    <!-- RIGHT: results -->
+    <div class="col">
+      <section class="panel">
+        <div class="panel-h"><h2>สถานะรายแพลตฟอร์ม</h2><span class="f-cat" id="boardNote"></span></div>
+        <div class="board" id="board"></div>
+        <div class="reach-sum" id="reachSum" hidden></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-b">
+          <div class="tabs" role="tablist">
+            <button class="tab" role="tab" id="tabRisk" aria-selected="true" type="button">ความเสี่ยงเนื้อหา<span class="n" id="nRisk">0</span></button>
+            <button class="tab" role="tab" id="tabLang" aria-selected="false" type="button">ภาษาและตัวสะกด<span class="n" id="nLang">0</span></button>
+          </div>
+          <div class="list" id="list"></div>
+          <div class="dismissed" id="dismissed" hidden></div>
+        </div>
+      </section>
+
+      <section class="panel" id="updPanel" hidden>
+        <div class="panel-h"><h2>อัปเดตแนวทางรายเดือน</h2><span class="f-cat" id="updWhen"></span></div>
+        <div class="panel-b">
+          <div class="upd-sum" id="updSum"></div>
+          <div class="tabs" role="tablist" style="margin-top:12px">
+            <button class="tab" role="tab" id="uTabPend" aria-selected="true" type="button">รออนุมัติ<span class="n" id="nPend">0</span></button>
+            <button class="tab" role="tab" id="uTabAct" aria-selected="false" type="button">ใช้งานอยู่<span class="n" id="nAct">0</span></button>
+            <button class="tab" role="tab" id="uTabLog" aria-selected="false" type="button">สิ่งที่เปลี่ยน<span class="n" id="nLog">0</span></button>
+          </div>
+          <div class="list upd-list" id="updList"></div>
+          <p class="store-note" id="updRole"></p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-h"><h2>คำยกเว้น</h2><span class="f-cat" id="allowCount"></span></div>
+        <div class="panel-b">
+          <p class="hint" style="margin:0 0 10px">คำที่ถูกต้องสำหรับงานของคุณ เช่น ชื่อเฉพาะ ชื่อแบรนด์ ชื่อรายการ หรือการสะกดตามแบบของสำนักข่าว ตัวตรวจจะไม่ทักคำเหล่านี้</p>
+          <form class="allow-form" id="allowForm" autocomplete="off">
+            <input id="allowInput" type="text" maxlength="60" placeholder="เช่น เกมส์โชว์, ไอ้ไข่, ชื่อรายการ" aria-label="คำยกเว้นใหม่">
+            <button class="btn" type="submit">เพิ่มคำ</button>
+          </form>
+          <div class="chips" id="allowChips"></div>
+          <div class="store-note" id="allowStore"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <div>
+      <h3>แนวทางที่ใช้อ้างอิง</h3>
+      <ul>
+        <li><a href="https://transparency.meta.com/policies/community-standards/" target="_blank" rel="noopener">Meta Community Standards</a> (Facebook &amp; Instagram) · <a href="https://transparency.meta.com/features/approach-to-newsworthy-content/" target="_blank" rel="noopener">ข้อยกเว้นเนื้อหาข่าว</a></li>
+        <li><a href="https://www.youtube.com/howyoutubeworks/policies/community-guidelines/" target="_blank" rel="noopener">YouTube Community Guidelines</a> · <a href="https://support.google.com/youtube/answer/6162278" target="_blank" rel="noopener">Advertiser-friendly guidelines</a></li>
+        <li><a href="https://www.tiktok.com/community-guidelines/en" target="_blank" rel="noopener">TikTok Community Guidelines</a> (ฉบับปรับปรุงมีผล 24 ก.ย. 2569)</li>
+        <li><a href="https://help.x.com/en/rules-and-policies/x-rules" target="_blank" rel="noopener">The X Rules</a></li>
+        <li><a href="https://bsky.social/about/support/community-guidelines" target="_blank" rel="noopener">Bluesky Community Guidelines</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>ข้อจำกัด</h3>
+      <p>เป็นเครื่องมือช่วยคัดกรองเบื้องต้นด้วยรายการคำและรูปแบบภาษา ไม่ใช่คำวินิจฉัยของแพลตฟอร์มและไม่ใช่คำปรึกษาทางกฎหมาย ระบบของแพลตฟอร์มพิจารณาภาพ วิดีโอ และบริบทด้วย</p>
+      <p>ข่าวที่รายงานเหตุรุนแรงอย่างเป็นกลางมักได้รับข้อยกเว้น แต่ระบบอัตโนมัติอาจจับผิดได้ ควรให้บรรณาธิการตรวจซ้ำเสมอ</p>
+    </div>
+    <div>
+      <h3>สายด่วนที่ควรแนบในข่าวอ่อนไหว</h3>
+      <p>สายด่วนสุขภาพจิต กรมสุขภาพจิต <b style="color:var(--ink)">1323</b> (24 ชม.)</p>
+      <p>ศูนย์ช่วยเหลือสังคม (เด็ก สตรี ความรุนแรงในครอบครัว) <b style="color:var(--ink)">1300</b></p>
+    </div>
+  </footer>
+</div>
+
+<div class="modal" id="cfm" hidden>
+  <div class="modal-box" role="alertdialog" aria-modal="true" aria-labelledby="cfmTitle" aria-describedby="cfmDesc">
+    <div class="modal-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></div>
+    <h3 id="cfmTitle">ยืนยันการล้างข้อความ?</h3>
+    <p id="cfmDesc">ข้อความในช่องต้นฉบับทั้งหมดจะถูกลบ และกู้คืนไม่ได้ ถ้ายังไม่ได้เก็บไว้ กด "ยกเลิก" แล้วคัดลอกข้อความก่อน</p>
+    <div class="modal-act">
+      <button type="button" class="btn" id="cfmCancel">ยกเลิก</button>
+      <button type="button" class="btn danger" id="cfmOk">ตกลง ล้างข้อความ</button>
+    </div>
+  </div>
+</div>
+<div class="modal" id="setm" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+    <h3 id="setTitle">ตั้งค่า</h3>
+    <fieldset class="opt-group">
+      <legend>เมื่อเปิดแอปครั้งถัดไป ให้ช่องต้นฉบับแสดง</legend>
+      <label class="opt"><input type="radio" name="startMode" id="st-last" value="last"><span><b>ข้อความล่าสุด</b><small>ข้อความที่พิมพ์ค้างไว้ครั้งก่อน บันทึกอัตโนมัติขณะพิมพ์</small></span></label>
+      <label class="opt"><input type="radio" name="startMode" id="st-sample" value="sample"><span><b>ข่าวตัวอย่าง</b><small>ข่าวสมมติสำหรับทดลองหรือสอนการใช้งาน</small></span></label>
+      <label class="opt"><input type="radio" name="startMode" id="st-blank" value="blank"><span><b>หน้าว่าง</b><small>เริ่มงานใหม่ทุกครั้ง ข้อความเก่าจะไม่ถูกเปิดขึ้นมา</small></span></label>
+    </fieldset>
+    <p class="set-note">การตั้งค่านี้เก็บไว้ในเบราว์เซอร์ของแต่ละคน ไม่กระทบคนอื่นในทีม</p>
+    <div class="modal-act"><button type="button" class="btn primary" id="setClose">เสร็จ</button></div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(()=>{
+"use strict";
+
+/* ---------- Platforms ---------- */
+const PLATS=[
+  {id:'fb',name:'Facebook',short:'f',limit:63206,count:'chars'},
+  {id:'ig',name:'Instagram',short:'ig',limit:2200,count:'chars'},
+  {id:'yt',name:'YouTube',short:'yt',limit:5000,count:'desc',title:100},
+  {id:'tt',name:'TikTok',short:'tt',limit:4000,count:'chars'},
+  {id:'x', name:'X',short:'x',limit:280,count:'x'},
+  {id:'bs',name:'Bluesky',short:'bs',limit:300,count:'graph'},
+];
+const PL=Object.fromEntries(PLATS.map(p=>[p.id,p]));
+
+/* ---------- Guideline links ---------- */
+const L={
+  meta:'https://transparency.meta.com/policies/community-standards/',
+  metaNews:'https://transparency.meta.com/features/approach-to-newsworthy-content/',
+  metaViolent:'https://transparency.meta.com/policies/community-standards/violent-graphic-content/',
+  ytCG:'https://www.youtube.com/howyoutubeworks/policies/community-guidelines/',
+  ytAds:'https://support.google.com/youtube/answer/6162278',
+  tt:'https://www.tiktok.com/community-guidelines/en',
+  ttInteg:'https://www.tiktok.com/safety/en/policies-and-engagement/integrity-authenticity',
+  x:'https://help.x.com/en/rules-and-policies/x-rules',
+  xHate:'https://help.x.com/en/rules-and-policies/hateful-conduct-policy',
+  xViolentOrg:'https://help.x.com/en/rules-and-policies/violent-entities',
+  bs:'https://bsky.social/about/support/community-guidelines',
+};
+
+/* ---------- Risk categories: per-platform level [0-3] + what the guideline says ---------- */
+const CATS={
+  graphic:{name:'ความรุนแรง / คำบรรยายสยดสยอง',
+    plat:{fb:[2,'Violent & Graphic Content: ข่าวได้ข้อยกเว้นด้านความเป็นข่าว แต่อาจถูกปิดด้วยหน้าจอคำเตือนและจำกัดผู้ชม 18+'],
+          ig:[2,'ใช้ Community Standards เดียวกับ Meta: อาจติดคำเตือนและไม่ถูกแนะนำใน Explore/Reels'],
+          yt:[2,'Violent or graphic content: ต้องมีบริบทข่าว/สารคดี (EDSA) ชัดเจน และมักได้โฆษณาแบบจำกัด'],
+          tt:[2,'เนื้อหารุนแรงสำหรับข่าวอาจถูกจำกัดอายุหรือไม่เข้าหน้า For You'],
+          x:[1,'Sensitive media: ควรตั้งค่าโพสต์เป็นสื่อละเอียดอ่อน'],
+          bs:[1,'ควรติดป้ายกำกับเนื้อหา (graphic media) ด้วยตัวเอง']},
+    fix:'ใช้คำเป็นกลาง เช่น "เสียชีวิต" "พบผู้เสียชีวิต" "ได้รับบาดเจ็บสาหัส" แทนคำบรรยายสยอง และใส่คำเตือนเนื้อหาไว้ต้นโพสต์',
+    links:[['Meta: Violent & Graphic Content',L.metaViolent],['Meta: เนื้อหาที่มีความเป็นข่าว',L.metaNews],['YouTube: Advertiser-friendly',L.ytAds]]},
+  selfharm:{name:'การฆ่าตัวตาย / ทำร้ายตนเอง',
+    plat:{fb:[2,'Suicide, Self-Injury: รายงานข่าวได้ แต่ห้ามบรรยายวิธีการ และอาจติดคำเตือน'],
+          ig:[2,'ใช้มาตรฐานเดียวกับ Meta'],
+          yt:[2,'Suicide & self-harm: ห้ามบรรยายวิธีการ มักจำกัดโฆษณา'],
+          tt:[2,'ห้ามให้รายละเอียดวิธีการ อาจไม่เข้าหน้า For You'],
+          x:[2,'ห้ามส่งเสริมหรือบอกวิธีทำร้ายตนเอง'],
+          bs:[2,'ห้ามส่งเสริมการทำร้ายตนเอง']},
+    fix:'ไม่ระบุวิธีการหรือสถานที่ ใช้คำว่า "เสียชีวิต" แทน "ปลิดชีพ" ไม่ใช้คำว่า "สำเร็จ" และแนบสายด่วนสุขภาพจิต 1323 ท้ายโพสต์',
+    links:[['Meta Community Standards',L.meta],['YouTube Community Guidelines',L.ytCG]]},
+  hate:{name:'คำเหยียด / ความเกลียดชัง',
+    plat:{fb:[3,'Hateful Conduct: ห้ามโจมตีคนตามเชื้อชาติ ศาสนา สัญชาติ เพศ เพศวิถี ความพิการ'],
+          ig:[3,'ใช้มาตรฐานเดียวกับ Meta'],
+          yt:[3,'Hate speech: ลบคลิปและอาจได้ strike'],
+          tt:[3,'Hate speech & hateful behavior: ลบเนื้อหา'],
+          x:[2,'Hateful conduct: ลบหรือจำกัดการมองเห็นของโพสต์'],
+          bs:[3,'Respect Others: ห้ามคำเกลียดชังต่อกลุ่มคน']},
+    fix:'เลี่ยงคำเหยียดและการเหมารวมทั้งกลุ่ม ถ้าต้องอ้างคำพูดเพื่อรายงานข่าว ให้ใส่เครื่องหมายคำพูด ระบุผู้พูด และเซ็นเซอร์บางส่วน',
+    links:[['X: Hateful conduct',L.xHate],['Meta Community Standards',L.meta]]},
+  harass:{name:'ด่าทอ / ดูหมิ่นบุคคล',
+    plat:{fb:[2,'Bullying & Harassment: บุคคลสาธารณะได้รับการคุ้มครองน้อยกว่า แต่คำดูหมิ่นรุนแรงยังผิดกฎ'],
+          ig:[2,'ใช้มาตรฐานเดียวกับ Meta'],
+          yt:[2,'Harassment & cyberbullying: ห้ามดูหมิ่นบุคคลที่ระบุตัวได้'],
+          tt:[2,'Harassment & bullying: ลบหรือจำกัดการเผยแพร่'],
+          x:[2,'Abuse/Harassment: อาจจำกัดการมองเห็น'],
+          bs:[2,'Respect Others: ห้ามคุกคามผู้อื่น']},
+    fix:'ใช้ข้อเท็จจริงแทนคำตัดสินหรือคำด่า ถ้าเป็นคำพูดของแหล่งข่าวให้ใส่เครื่องหมายคำพูดและระบุผู้พูด',
+    links:[['Meta Community Standards',L.meta],['The X Rules',L.x]]},
+  violent:{name:'ยุยง / ข่มขู่ใช้ความรุนแรง',
+    plat:{fb:[3,'Violence & Incitement: ห้ามเรียกร้องหรือสนับสนุนความรุนแรง'],
+          ig:[3,'ใช้มาตรฐานเดียวกับ Meta'],
+          yt:[3,'ห้ามยุยงความรุนแรงหรือข่มขู่บุคคล'],
+          tt:[3,'Violent behaviors: ลบเนื้อหาที่ข่มขู่หรือยุยง'],
+          x:[3,'Violent speech: รวมถึงการแสดงความ "อยากให้" คนอื่นได้รับอันตราย'],
+          bs:[3,'Safety First: ห้ามข่มขู่หรือยุยงความรุนแรง']},
+    fix:'ตัดถ้อยคำเชิงยุยงออก ถ้าเป็นคำพูดที่ต้องรายงาน ให้สรุปความพร้อมบริบทแทนการยกมาตรง ๆ',
+    links:[['Meta Community Standards',L.meta],['The X Rules',L.x]]},
+  sexual:{name:'เนื้อหาทางเพศ / ความรุนแรงทางเพศ',
+    plat:{fb:[2,'รายงานข่าวได้ แต่ห้ามระบุตัวผู้เสียหายหรือเผยแพร่ภาพ'],
+          ig:[2,'ใช้มาตรฐานเดียวกับ Meta'],
+          yt:[2,'Nudity & sexual content: ข่าวทำได้แต่มักจำกัดโฆษณา'],
+          tt:[2,'เนื้อหาทางเพศถูกจำกัดการเผยแพร่'],
+          x:[2,'ห้ามสื่อทางเพศที่ไม่ได้รับความยินยอม (NCII)'],
+          bs:[2,'ต้องติดป้าย adult content']},
+    fix:'ห้ามระบุชื่อ ภาพ หรือข้อมูลที่ทำให้รู้ตัวผู้เสียหาย ใช้ถ้อยคำเป็นกลาง เช่น "ถูกล่วงละเมิดทางเพศ"',
+    links:[['Meta Community Standards',L.meta]]},
+  child:{name:'ผู้เยาว์ในข่าวอ่อนไหว',
+    plat:{fb:[3,'Child Sexual Exploitation/Child safety: ความเสี่ยงสูงสุด ห้ามระบุตัวเด็ก'],ig:[3,'ใช้มาตรฐานเดียวกับ Meta'],
+          yt:[3,'Child safety: ลบเนื้อหาทันที'],tt:[3,'Youth safety: ลบเนื้อหาทันที'],x:[3,'Child safety: zero tolerance'],bs:[3,'Safety First: คุ้มครองผู้เยาว์']},
+    law:'พ.ร.บ.คุ้มครองเด็ก พ.ศ. 2546 มาตรา 27 ห้ามโฆษณาหรือเผยแพร่ข้อมูลที่ทำให้รู้จักตัวเด็กหรือผู้ปกครองในทางที่เสียหาย',
+    fix:'ไม่ระบุชื่อ ชื่อเล่น โรงเรียน หมู่บ้าน ภาพ หรือชื่อผู้ปกครองของเด็ก ใช้ "เด็กหญิงวัย 12 ปี" แทน',
+    links:[['Meta Community Standards',L.meta]]},
+  privacy:{name:'ข้อมูลส่วนบุคคล',
+    plat:{fb:[2,'Privacy Violations: ห้ามเผยแพร่ข้อมูลระบุตัวตนของผู้อื่น'],ig:[2,'ใช้มาตรฐานเดียวกับ Meta'],
+          yt:[2,'Privacy: ลบเมื่อเจ้าของข้อมูลร้องเรียน'],tt:[3,'Privacy & security: ห้ามเผยแพร่ข้อมูลระบุตัวตน'],
+          x:[3,'Private information: ห้ามเผยแพร่เบอร์โทร ที่อยู่ เลขบัตร โดยไม่ได้รับอนุญาต'],bs:[2,'ห้าม doxxing']},
+    law:'พ.ร.บ.คุ้มครองข้อมูลส่วนบุคคล (PDPA) — งานข่าวได้รับข้อยกเว้นบางส่วน แต่ต้องเป็นไปตามจริยธรรมวิชาชีพ',
+    fix:'ตัดข้อมูลส่วนบุคคลออก หรือยืนยันว่าเป็นช่องทางทางการของหน่วยงาน',
+    links:[['The X Rules',L.x],['TikTok Community Guidelines',L.tt]]},
+  misinfo:{name:'ข้อมูลยังไม่ยืนยัน / ข้อมูลเท็จ',
+    plat:{fb:[2,'Misinformation: อาจถูกตรวจสอบข้อเท็จจริงและลดการมองเห็น'],ig:[2,'ใช้มาตรฐานเดียวกับ Meta'],
+          yt:[2,'Misinformation ด้านการแพทย์และการเลือกตั้งถูกลบได้'],
+          tt:[2,'Integrity & Authenticity: ห้ามข้อมูลเท็จที่ก่อความเสียหายร้ายแรง ข้อมูลที่ยังไม่ยืนยันอาจไม่เข้า For You'],
+          x:[1,'อาจถูกติด Community Notes'],bs:[1,'Be Authentic: ห้ามจงใจเผยแพร่ข้อมูลเท็จ']},
+    fix:'ระบุแหล่งที่มาให้ชัด แยกข้อเท็จจริงกับข้อกล่าวอ้าง และไม่เร่งให้แชร์ก่อนยืนยัน',
+    links:[['TikTok: Integrity & Authenticity',L.ttInteg],['Meta Community Standards',L.meta]]},
+  ai:{name:'สื่อสังเคราะห์ / AI',
+    plat:{fb:[1,'ภาพหรือเสียงสมจริงที่สร้างด้วย AI ควรติดป้าย "AI info"'],ig:[1,'ใช้มาตรฐานเดียวกับ Meta'],
+          yt:[2,'ต้องเปิดเผย altered or synthetic content ตอนอัปโหลด'],
+          tt:[2,'ต้องติดป้าย AIGC และห้าม AIGC ที่ชี้นำผิดในเรื่องสาธารณะ'],
+          x:[2,'Synthetic & manipulated media: อาจติดป้ายหรือลบ'],bs:[1,'Be Authentic: ห้ามแอบอ้างหรือชี้นำผิด']},
+    fix:'ระบุให้ชัดว่าภาพหรือเสียงสร้างหรือตัดต่อด้วย AI และเปิดตัวเลือกติดป้าย AI ของแต่ละแพลตฟอร์ม',
+    links:[['TikTok: Integrity & Authenticity',L.ttInteg]]},
+  bait:{name:'พาดหัวล่อคลิก / เรียกเอนเกจ',
+    plat:{fb:[2,'Meta ลดการเผยแพร่โพสต์ที่ขอให้กดไลก์ แชร์ หรือคอมเมนต์ (engagement bait)'],ig:[1,'อาจไม่ถูกแนะนำ'],
+          yt:[1,'ชื่อหรือคำอธิบายที่ชี้นำผิด (misleading metadata) อาจถูกลบ'],tt:[1,'อาจไม่เข้าหน้า For You'],
+          x:[1,'ถ้าใช้ซ้ำ ๆ เข้าข่าย spam / platform manipulation'],bs:[1,'Be Authentic: ห้ามปั่นเอนเกจ']},
+    fix:'พาดหัวด้วยข้อเท็จจริงหลัก (ใคร ทำอะไร ที่ไหน) แทนคำเร้าอารมณ์ และตัดคำขอให้กดไลก์หรือแชร์',
+    links:[['Meta Community Standards',L.meta]]},
+  regulated:{name:'สินค้า / กิจกรรมควบคุม',
+    plat:{fb:[1,'ข่าวทำได้ แต่ห้ามชักชวนซื้อขาย'],ig:[1,'ใช้มาตรฐานเดียวกับ Meta'],yt:[1,'มักได้โฆษณาแบบจำกัด'],
+          tt:[2,'Regulated goods: จำกัดการเผยแพร่ แม้เป็นเพียงการกล่าวถึง'],x:[1,'ห้ามส่งเสริมการซื้อขายผิดกฎหมาย'],bs:[1,'Follow the Rules']},
+    fix:'รายงานเชิงข้อเท็จจริง ไม่ระบุแหล่งซื้อ ราคา หรือช่องทางติดต่อ และไม่เชิดชู',
+    links:[['TikTok Community Guidelines',L.tt]]},
+  weapons:{name:'อาวุธ / วัตถุระเบิด',
+    plat:{fb:[3,'ห้ามสอนวิธีทำหรือซื้อขายอาวุธ'],ig:[3,'ใช้มาตรฐานเดียวกับ Meta'],yt:[3,'Firearms policy: ห้ามสอนประกอบหรือขาย'],
+          tt:[3,'ห้ามสอนทำหรือซื้อขายอาวุธ'],x:[3,'ห้ามส่งเสริมการซื้อขายอาวุธผิดกฎหมาย'],bs:[3,'Safety First']},
+    fix:'ตัดรายละเอียดวิธีทำหรือช่องทางซื้อขายออก รายงานเฉพาะข้อเท็จจริงของเหตุการณ์',links:[['Meta Community Standards',L.meta]]},
+  scam:{name:'หลอกลวง / การเงิน',
+    plat:{fb:[3,'Fraud & scams'],ig:[3,'ใช้มาตรฐานเดียวกับ Meta'],yt:[3,'Spam, deceptive practices & scams'],
+          tt:[3,'Frauds & scams'],x:[2,'Financial scam policy'],bs:[2,'Be Authentic']},
+    fix:'ถ้าเป็นข่าวเตือนภัย ให้ระบุชัดว่าเป็นข้อความของมิจฉาชีพ และไม่ใส่ลิงก์หรือช่องทางติดต่อของผู้หลอกลวง',links:[['Meta Community Standards',L.meta]]},
+  terror:{name:'องค์กรอันตราย / ผู้ก่อเหตุ',
+    plat:{fb:[3,'Dangerous Organizations & Individuals: ห้ามยกย่องผู้ก่อเหตุหรือแชร์สื่อที่ผู้ก่อเหตุผลิต'],ig:[3,'ใช้มาตรฐานเดียวกับ Meta'],
+          yt:[3,'Violent extremist content: ห้ามเชิดชู'],tt:[3,'Violent & hateful organizations'],x:[3,'Violent & hateful entities'],bs:[3,'Safety First']},
+    fix:'ไม่เชิดชูหรือเผยแพร่แถลงการณ์และคลิปของผู้ก่อเหตุ เน้นผู้เสียหายและข้อเท็จจริง',
+    links:[['X: Violent entities',L.xViolentOrg],['Meta Community Standards',L.meta]]},
+  profanity:{name:'คำหยาบ',
+    plat:{fb:[1,'ไม่ผิดโดยตรง แต่ถ้าด่าบุคคลจะเข้าข่าย Bullying & Harassment'],ig:[1,'ใช้มาตรฐานเดียวกับ Meta'],
+          yt:[1,'คำหยาบในชื่อคลิปหรือภาพปกทำให้ได้โฆษณาแบบจำกัด การสะกดเลี่ยงก็ถือว่าหยาบ'],
+          tt:[1,'อาจไม่ถูกแนะนำถ้าหยาบมาก'],x:[1,'ทำได้ ยกเว้นใช้ด่าหรือคุกคามผู้อื่น'],bs:[1,'ทำได้ แต่ขัดหลัก Respect Others ถ้าเล็งไปที่คน']},
+    fix:'ตัดออกหรือเซ็นเซอร์ ถ้าเป็นคำพูดของแหล่งข่าวให้ใส่เครื่องหมายคำพูด และอย่าวางไว้ในพาดหัว',
+    links:[['YouTube: Advertiser-friendly',L.ytAds]]},
+  reach:{name:'กระทบการมองเห็น / โฆษณา',
+    plat:{fb:[1,'ไม่ผิด Community Standards แต่เนื้อหาความรุนแรงหรือโศกนาฏกรรมอาจไม่ถูกแนะนำให้คนที่ไม่ได้ติดตาม ถูกซ่อนจากผู้ใช้อายุต่ำกว่า 18 ปี และอาจไม่มีสิทธิ์สร้างรายได้ตาม Content Monetization Policies'],
+          ig:[1,'อาจไม่ถูกแนะนำใน Explore/Reels และแฮชแท็กที่มีคำรุนแรงอาจถูกจำกัดผลการค้นหา'],
+          yt:[1,'Advertiser-friendly: ความรุนแรง อาวุธปืน และเหตุการณ์อ่อนไหว มักได้โฆษณาแบบจำกัด ใช้กฎเดียวกันกับชื่อคลิป ภาพปก คำอธิบาย และแท็ก บริบทข่าวช่วยได้ แต่การใช้คำเกี่ยวกับโศกนาฏกรรมเพื่อเรียกยอดวิวอาจไม่ได้โฆษณาเลย'],
+          tt:[1,'For You feed Eligibility Standards: เนื้อหาความรุนแรงหรือน่าตกใจ แม้ไม่ผิดกฎ อาจไม่ถูกแนะนำใน For You'],
+          x:[1,'ไม่ผิดกฎ แต่ผู้ลงโฆษณาเลือกไม่ให้โฆษณาแสดงข้างโพสต์หมวดความรุนแรงได้ ถ้าแนบภาพควรตั้งค่าสื่อละเอียดอ่อน'],
+          bs:[1,'ไม่มีระบบโฆษณา แต่ labeler และฟีดบางตัวอาจซ่อนโพสต์ที่มีเนื้อหารุนแรง']},
+    fix:'ใช้ได้ในข่าว แต่ควรเลี่ยงไว้ในพาดหัว ชื่อคลิป และแฮชแท็ก ใช้คำกลาง เช่น "เหตุยิง" "ผู้ก่อเหตุ" "ผู้เสียชีวิต" และใช้แฮชแท็กกลาง เช่น #ข่าวอาชญากรรม #ข่าวท้องถิ่น',
+    links:[['TikTok: For You feed Eligibility Standards','https://www.tiktok.com/safety/en/policies-and-engagement/fyf-standards'],['YouTube: Advertiser-friendly',L.ytAds],['Instagram: Content Monetization Policies','https://help.instagram.com/2635536099905516'],['Meta: เนื้อหาที่เหมาะกับวัยรุ่น','https://transparency.meta.com/policies/age-appropriate-content/']]},
+  law:{name:'ข้อควรระวังตามกฎหมายไทย',plat:{},fix:'',links:[]},
+  other:{name:'อื่น ๆ',plat:{fb:[1,''],ig:[1,''],yt:[1,''],tt:[1,''],x:[1,''],bs:[1,'']},fix:'',links:[]},
+};
+
+/* ---------- Risk rules ---------- */
+// t: terms, re: regex, ex: exceptions (correct words containing the term), s: severity 1-3
+const RULES=[
+  // graphic
+  {c:'graphic',s:2,t:['สภาพสุดสยอง','เลือดสาด','จมกองเลือด','นอนจมกองเลือด','ไส้ทะลัก','ไส้แตก','สมองกระจาย','สมองไหล','หัวขาด','ศพไร้หัว','ชำแหละศพ','หั่นศพ','ศพเละ','เละเป็นโจ๊ก','ร่างแหลก','แหลกเหลว','ศพเน่า','ศพอืด','ไหม้เกรียม','ถลกหนัง','ควักลูกตา','สยองขวัญ','สุดสยอง','สยดสยอง','ภาพสยอง','คลิปสยอง','อนาถ'],w:'คำบรรยายที่เน้นความสยองมากกว่าข้อเท็จจริง'},
+  {c:'graphic',s:1,t:['กองเลือด','โชกเลือด'],w:'คำบรรยายเลือด ทำให้ระบบจัดเป็นเนื้อหากราฟิก'},
+  {c:'reach',s:1,t:['มือปืน','ยิงกันตาย','ยิงกันเสียชีวิต','ยิงกัน','ถูกยิง','ยิงดับ','ยิงตาย','ยิงเสียชีวิต','ยิงถล่ม','ยิงสนั่น','ลอบยิง','กราดยิง','ดวลปืน','ชักปืน','อาวุธปืน','ปืนพก','ปืนลูกซอง','ปืนสั้น','ปืนยาว','ปลอกกระสุน','กระสุน','แทงดับ','แทงตาย','ถูกแทง','ฆาตกรรม','ฆ่าโหด','ฆ่าชิงทรัพย์','สังหาร','ศพ','พบศพ','ซากศพ','ดับคาที่','ตายคาที่','เสียชีวิตคาที่','ดับสลด','ตายหมู่','สลด','โศกนาฏกรรม','อาชญากรรม','ลอบวางระเบิด','ระเบิดพลีชีพ','ตัวประกัน','จับตัวประกัน','ทำร้ายร่างกาย','รุมทำร้าย','ทะเลาะวิวาท'],ex:['ศพไร้หัว','ชำแหละศพ','หั่นศพ','ศพเละ','ศพเน่า','ศพอืด','ข่าวอาชญากรรม','ยิงประตู','ยิงลูก','ยิงจุดโทษ','ยิงไกล','ยิงแสง','ยิงเลเซอร์','ยิงโฆษณา','ยิงแอด','ถูกยิงประตู'],w:'คำเกี่ยวกับความรุนแรง อาวุธ หรือความตาย ไม่ผิดกฎชุมชน แต่มีผลต่อการแนะนำโพสต์และโฆษณา'},
+  {c:'reach',s:1,re:/(?:ดับ|ตาย|เสียชีวิต|เจ็บ)\s?(?:\d+|[๐-๙]+|สอง|สาม|สี่|ห้า|หก|เจ็ด|แปด|เก้า|สิบ)\s?(?:ศพ|ราย|คน)|เจ็บระนาว|ดับยกครัว/g,w:'ตัวเลขผู้เสียชีวิตหรือบาดเจ็บ โดยเฉพาะในพาดหัว มักถูกจัดเป็นเหตุการณ์อ่อนไหว'},
+  // self-harm
+  {c:'selfharm',s:3,t:['ผูกคอตาย','ผูกคอ','กระโดดตึก','กระโดดสะพาน','กระโดดน้ำตาย','กินยาฆ่าแมลง','กินยาเกินขนาด','กินยาตาย','กรีดข้อมือ','เผาถ่าน','รมควันตัวเอง','ยิงตัวตาย','ยิงตัวเอง'],w:'ระบุวิธีการทำร้ายตนเอง ซึ่งทุกแพลตฟอร์มและแนวทางรายงานข่าวขององค์การอนามัยโลกแนะนำให้เลี่ยง'},
+  {c:'selfharm',s:2,t:['ฆ่าตัวตาย','อัตวินิบาตกรรม','ปลิดชีพตัวเอง','ปลิดชีวิตตัวเอง','ปลิดชีพ','จบชีวิตตัวเอง','คิดสั้น','ฆ่าตัวตายสำเร็จ'],w:'ประเด็นการฆ่าตัวตาย รายงานได้แต่ต้องระวังถ้อยคำ'},
+  {c:'selfharm',s:2,t:['unalive','อันอะไลฟ์','ฆ.ต.ต.','ฆ่าตัว ตาย'],w:'การสะกดเลี่ยงคำ แพลตฟอร์มถือว่ามีความหมายเดียวกับคำเต็ม'},
+  // hate
+  {c:'hate',s:3,t:['ไอ้มืด','อีมืด','นิโกร','ไอ้เจ๊ก','อีเจ๊ก','ไอ้แขก','อีแขก','ไอ้ญวน','ไอ้ลาว','อีลาว','ไอ้พม่า','อีพม่า','ไอ้เขมร','อีเขมร','ไอ้ตุ๊ด','อีตุ๊ด','อีแต๋ว','ผิดเพศ','เก้งกวาง','ไอ้ง่อย','ไอ้ใบ้','ไอ้บอด','ไอ้ปัญญาอ่อน'],w:'คำเรียกเหยียดตามเชื้อชาติ เพศ หรือความพิการ'},
+  {c:'hate',s:2,t:['ปัญญาอ่อน','ต่างด้าวสกปรก','พวกต่างด้าว','พวกแขก','พวกตุ๊ด','พวกกะเทย','ผิดธรรมชาติ','เชื้อโรคของสังคม','ขยะสังคม','ปรสิต','แมลงสาบ','เดรัจฉาน','ไม่ใช่คน','ต่ำกว่าคน'],w:'ถ้อยคำเหยียดหรือลดทอนความเป็นมนุษย์ (dehumanization)'},
+  {c:'hate',s:3,re:/(?:พวก|ชาว|คน)\s?[฀-๿]{1,14}\s?(?:ทุกคน|ทั้งหมด|ทั้งนั้น|ทั้งประเทศ)?\s?(?:มัน)?(?:เป็น|ล้วน|ก็|แม่ง)?(?:แต่)?\s?(?:ขี้ขโมย|โจร|สกปรก|เชื้อโรค|ตัวปัญหา|ตัวอันตราย|ขยะ|แมลงสาบ|ปรสิต|สัตว์|ไม่ใช่คน|อาชญากร|ขี้เกียจ)(?:ทุกคน|ทั้งหมด|ทั้งนั้น)?/g,w:'เหมารวมทั้งกลุ่มคนในทางลบ ซึ่งเป็นลักษณะหลักของ hateful conduct'},
+  // harassment
+  {c:'harass',s:2,t:['ไอ้ควาย','อีควาย','โง่เป็นควาย','หน้าควาย','ไอ้โง่','อีโง่','ไอ้บ้า','อีบ้า','อีดอก','อีตัว','ไอ้เวร','อีเวร','ไอ้ชั่ว','อีชั่ว','ไอ้ระยำ','ไอ้สัตว์','อีสัตว์','ไอ้สัด','อีสัด','ไอ้หน้าตัวเมีย','สันดานเสีย','สันดาน','ไร้สมอง','สมองหมา','หน้าหมา','ไอ้อ้วน','อีอ้วน','ไอ้ดำ','อีดำ','ขี้ข้า','ชาติชั่ว','ไอ้ขี้แพ้','อีขี้แพ้','โคตรโง่','สถุล'],w:'คำดูหมิ่นที่เล็งไปที่บุคคล'},
+  {c:'harass',s:1,t:['สลิ่ม','ควายแดง','สามกีบ','ส้มเน่า','ติ่งส้ม','นกหวีดเน่า','ไพร่','ตลาดล่าง','ขุนแผน'],ex:['ไพร่พล','ขุนแผนแสนสะท้าน'],w:'ป้ายสีทางการเมือง ในข่าวควรใช้ชื่อกลุ่มหรือพรรคตามจริง'},
+  // violent speech
+  {c:'violent',s:3,t:['ฆ่ามัน','ฆ่าให้หมด','ฆ่าล้างโคตร','ฆ่าทิ้ง','ยิงทิ้ง','ยิงมันเลย','ยิงให้ตาย','เผาทิ้ง','เผามัน','เผาบ้านมัน','สมควรตาย','สมควรโดนยิง','สมควรโดนฆ่า','ไปตายซะ','ไปตายซะไป','ตายๆไปซะ','ตาย ๆ ไปซะ','ประหารมัน','แขวนคอมัน','ลากไส้','รุมกระทืบ','กระทืบมัน','เอาให้ตาย','ระเบิดทิ้ง','ล่าแม่มด','ล้างบาง'],w:'ถ้อยคำเรียกร้องหรือแสดงความต้องการให้เกิดความรุนแรง'},
+  // sexual
+  {c:'sexual',s:3,t:['คลิปหลุด','ภาพหลุด','คลิปลับ','ภาพลับ','แอบถ่ายใต้กระโปรง','คลิปแอบถ่าย','แจกคลิป','แจกลิงก์'],w:'สื่อทางเพศที่ไม่ได้รับความยินยอม ทุกแพลตฟอร์มลบทันที และผิดกฎหมาย'},
+  {c:'sexual',s:2,t:['ข่มขืน','รุมโทรม','กระทำชำเรา','ล่วงละเมิดทางเพศ','อนาจาร','ภาพโป๊','เปลือยกาย','ภาพเปลือย','ลามก','OnlyFans','ขายตัว','ค้าประเวณี','ค้ากาม'],w:'ประเด็นความรุนแรงทางเพศหรือเนื้อหาทางเพศ'},
+  // child
+  {c:'child',s:3,re:/(?:เด็ก|นักเรียน|นักเรียนหญิง|เยาวชน|ด\.ญ\.|ด\.ช\.|เด็กหญิง|เด็กชาย|ลูกสาว|ลูกชาย|ผู้เยาว์)[^\n]{0,50}?(?:ข่มขืน|อนาจาร|ล่วงละเมิด|กระทำชำเรา|รุมโทรม|ค้าประเวณี|ถูกทารุณ|ทารุณกรรม)|(?:ข่มขืน|อนาจาร|ล่วงละเมิด|กระทำชำเรา|รุมโทรม|ทารุณ)[^\n]{0,50}?(?:เด็ก|นักเรียน|เยาวชน|ด\.ญ\.|ด\.ช\.|ผู้เยาว์)/g,w:'ข่าวความรุนแรงที่เกี่ยวข้องกับผู้เยาว์ ต้องไม่มีข้อมูลที่ระบุตัวเด็กได้'},
+  {c:'child',s:2,re:/(?:ด\.ญ\.|ด\.ช\.|เด็กหญิง|เด็กชาย)\s?[ก-ฮ][฀-๿]{1,20}/g,w:'ระบุชื่อผู้เยาว์ ตรวจว่าไม่ใช่ผู้เสียหายหรือผู้ต้องหาในคดี'},
+  // privacy
+  {c:'privacy',s:2,re:/(?<![\d])0[689]\d[\s-]?\d{3}[\s-]?\d{4}(?![\d])/g,w:'เบอร์โทรศัพท์มือถือ'},
+  {c:'privacy',s:1,re:/(?<![\d])0[2-7][\s-]?\d{3}[\s-]?\d{4}(?![\d])/g,w:'เบอร์โทรศัพท์บ้าน/สำนักงาน'},
+  {c:'privacy',s:3,re:/(?<![\d])\d[\s-]?\d{4}[\s-]?\d{5}[\s-]?\d{2}[\s-]?\d(?![\d])/g,w:'รูปแบบเลขบัตรประชาชน 13 หลัก'},
+  {c:'privacy',s:2,re:/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g,w:'อีเมลส่วนบุคคล'},
+  {c:'privacy',s:2,re:/บ้านเลขที่\s?\d+(?:\/\d+)?/g,w:'บ้านเลขที่ที่ทำให้ระบุที่อยู่ได้'},
+  {c:'privacy',s:2,re:/(?:เลขบัญชี|บัญชีเลขที่)\s?:?\s?[\d-]{8,}/g,w:'เลขบัญชีธนาคาร'},
+  // misinfo
+  {c:'misinfo',s:2,t:['รีบแชร์ด่วน','แชร์ด่วน','ส่งต่อด่วน','รีบแชร์','ส่งต่อให้มากที่สุด','แชร์ให้ถึง','ข่าวนี้จริง 100%','จริง100%','เชื่อหรือไม่'],w:'เร่งให้แชร์ ซึ่งเป็นรูปแบบที่พบบ่อยในข้อมูลเท็จ'},
+  {c:'misinfo',s:1,t:['ข่าวลือ','ยังไม่ยืนยัน','ยังไม่ได้รับการยืนยัน','ไม่ทราบแหล่งที่มา','มีคนบอกว่า','ว่ากันว่า','ลือกันว่า','ได้ยินมาว่า'],w:'ข้อมูลที่ยังไม่ยืนยัน ควรระบุแหล่งที่มาหรือรอการยืนยัน'},
+  {c:'misinfo',s:2,t:['รักษาหายขาด','หายขาด','รักษามะเร็ง','ฆ่าเชื้อโควิด','วัคซีนอันตราย','วัคซีนฆ่าคน','ไม่ต้องพึ่งหมอ','หมอไม่อยากให้รู้','สมุนไพรรักษา','ล้างพิษ','กินแล้วหาย'],w:'ข้อกล่าวอ้างด้านสุขภาพ ซึ่ง YouTube, Meta และ TikTok ตรวจเข้มเป็นพิเศษ'},
+  {c:'misinfo',s:1,t:['โกงเลือกตั้ง','บัตรเขย่ง','เลือกตั้งสกปรก'],w:'ข้อกล่าวหาเรื่องการเลือกตั้ง ต้องมีหลักฐานหรือแหล่งอ้างอิง'},
+  // AI
+  {c:'ai',s:1,t:['ภาพ AI','คลิป AI','ภาพเอไอ','คลิปเอไอ','deepfake','ดีปเฟก','ดีพเฟค','ภาพตัดต่อ','คลิปตัดต่อ','เสียงปลอม','สร้างด้วย AI','สร้างโดย AI','AI สร้าง','เอไอสร้าง'],w:'กล่าวถึงสื่อสังเคราะห์หรือสื่อตัดต่อ ถ้าแนบสื่อนั้นต้องติดป้าย AI'},
+  // bait
+  {c:'bait',s:2,t:['ดูก่อนโดนลบ','ก่อนโดนลบ','พิมพ์ 99','พิมพ์99','พิมพ์สาธุ','สาธุ 99','ถ้าไม่แชร์','กดไลก์','กดไลค์','กดแชร์','แท็กเพื่อน','คอมเมนต์ว่า','เม้นว่า','พิมพ์ว่า','อย่าลืมกดติดตาม','ใครเห็นด้วยกดไลก์'],w:'ขอให้กดไลก์ แชร์ หรือคอมเมนต์ (engagement bait)'},
+  {c:'bait',s:1,t:['ช็อก','ช็อค','อึ้ง','ตะลึง','ห้ามพลาด','ดูให้จบ','คุณจะไม่เชื่อ','เฉลยในคอมเมนต์','ลิงก์ในคอมเมนต์','ดราม่าสนั่น','ร้อนฉ่า','แฉหมดเปลือก','สุดช็อก','หัวร้อน'],ex:['ช็อกโกแลต','ช็อคโกแลต'],w:'คำเร้าอารมณ์ในพาดหัว (clickbait)'},
+  // regulated
+  {c:'regulated',s:1,t:['ยาบ้า','ยาไอซ์','ไอซ์','โคเคน','เฮโรอีน','เคตามีน','ยาเค','ยาอี','กัญชา','ใบกระท่อม','บุหรี่ไฟฟ้า','พอตไฟฟ้า'],ex:['ไอซ์แลนด์','ไอซ์แลนด'],w:'สารเสพติดหรือสินค้าควบคุม'},
+  {c:'regulated',s:2,t:['เว็บพนัน','พนันออนไลน์','บาคาร่า','สล็อตออนไลน์','สล็อต','หวยใต้ดิน','แทงบอลออนไลน์','คาสิโนออนไลน์'],w:'การพนัน การโฆษณาเว็บพนันผิดกฎหมายไทย'},
+  {c:'regulated',s:1,t:['เบียร์','เหล้า','สุรา','วิสกี้','ไวน์'],w:'เครื่องดื่มแอลกอฮอล์',law:'พ.ร.บ.ควบคุมเครื่องดื่มแอลกอฮอล์ พ.ศ. 2551 มาตรา 32 ห้ามโฆษณาอวดอ้างสรรพคุณหรือชักจูงให้ดื่ม ข่าวทั่วไปทำได้แต่อย่าแสดงโลโก้หรือเชิญชวน'},
+  // weapons
+  {c:'weapons',s:3,t:['วิธีทำระเบิด','สูตรระเบิด','ประกอบระเบิด','ทำปืนเอง','ขายปืน','ปืนเถื่อนราคา','สั่งซื้อปืน'],w:'วิธีทำหรือช่องทางซื้อขายอาวุธ'},
+  {c:'weapons',s:1,t:['ปืนเถื่อน','ปืนไทยประดิษฐ์','ระเบิดปิงปอง','ระเบิดแสวงเครื่อง'],w:'อาวุธในข่าว รายงานได้แต่ห้ามมีรายละเอียดวิธีทำ'},
+  // scam
+  {c:'scam',s:2,t:['การันตีกำไร','การันตีผลตอบแทน','ผลตอบแทนสูง','รวยเร็ว','ลงทุนน้อยกำไรงาม','ปันผลรายวัน','แจกเงินฟรี','กดรับเงิน','ไม่มีความเสี่ยง'],w:'ถ้อยคำแบบชวนลงทุนหรือหลอกลวงทางการเงิน'},
+  // terror
+  {c:'terror',s:3,re:/(?:วีรบุรุษ|ฮีโร่|ยกย่อง|เทิดทูน|นับถือ|สุดเท่|ใจถึง)[^\n]{0,30}?(?:มือปืน|ผู้ก่อเหตุ|ผู้ก่อการร้าย|มือระเบิด|มือกราดยิง)|(?:มือปืน|ผู้ก่อเหตุ|ผู้ก่อการร้าย|มือระเบิด|มือกราดยิง)[^\n]{0,30}?(?:วีรบุรุษ|ฮีโร่|สุดเท่|ใจถึง|น่านับถือ)/g,w:'ยกย่องหรือเชิดชูผู้ก่อเหตุ'},
+  {c:'terror',s:2,t:['แถลงการณ์ของผู้ก่อเหตุ','คลิปจากผู้ก่อเหตุ','ไลฟ์ของผู้ก่อเหตุ','คลิปไลฟ์ขณะก่อเหตุ','โพสต์ของมือปืน'],w:'สื่อที่ผู้ก่อเหตุผลิต ซึ่ง Meta และ X ห้ามเผยแพร่ต่อ'},
+  {c:'terror',s:1,t:['ไอเอส','ISIS','อัลกออิดะห์','ตาลีบัน','ก่อการร้าย'],w:'กล่าวถึงองค์กรหรือการก่อการร้าย รายงานได้แต่ห้ามเชิดชู'},
+  // profanity
+  {c:'profanity',s:2,t:['ควย','เย็ด','เหี้ย','สัส','สาด','เชี่ย','แม่ง','ชิบหาย','ฉิบหาย','ระยำ','ส้นตีน','ตีน','จัญไร','ดอกทอง','หน้าด้าน','fuck','shit','bitch','wtf'],ex:['เหี้ยม','แม่งาน','สาดน้ำ','สาดสี','สาดกระเซ็น','สาดส่อง','สาดแสง','สาดใส่','ตีนเป็ด','ตีนตุ๊กแก','ตีนกา','ตีนผี','ตีนแมว','ตีนเขา','ตีนไก่','ตีนเป็ด','หน้าด้านหน้าทน','สัสดี','เลือดสาด'],w:'คำหยาบ'},
+  {c:'profanity',s:1,t:['มึง','กู','ห่าราก','ห่าเหว','โคตรพ่อ','โคตรแม่'],ex:['กูเกิล','กูเกิ้ล','กูรู','ผักกูด','กูด','กูชิ','กู้'],w:'สรรพนามหรือคำไม่สุภาพ ในข่าวควรใช้เมื่ออ้างคำพูดเท่านั้น'},
+  {c:'profanity',s:1,re:/[ก-๎]+[*#@]{1,}[ก-๎*#@]*/g,w:'คำหยาบที่เซ็นเซอร์ด้วยสัญลักษณ์ YouTube ระบุว่าการสะกดเลี่ยงในชื่อคลิปยังถือเป็นคำหยาบ'},
+  // Thai law
+  {c:'law',s:1,t:['สถาบันพระมหากษัตริย์','ม.112','มาตรา 112','มาตรา112','หมิ่นสถาบัน'],w:'ประเด็นอ่อนไหวทางกฎหมาย',law:'ประมวลกฎหมายอาญา มาตรา 112 — ตรวจความถูกต้องของข้อเท็จจริง ราชาศัพท์ และให้ฝ่ายกฎหมายหรือบรรณาธิการตรวจก่อนเผยแพร่'},
+  {c:'law',s:1,re:/(?:นาย|นาง|น\.ส\.|นางสาว|พล\.[ตอ]\.[อทต]\.)\s?[ก-ฮ][฀-๿]{1,20}[^\n]{0,40}?(?:ทุจริต|โกงกิน|ยักยอก|รับสินบน|ฉ้อโกง|คอร์รัปชัน|ฆาตกร|เป็นโจร)/g,w:'ระบุชื่อบุคคลคู่กับข้อกล่าวหา',law:'ความผิดฐานหมิ่นประมาท ป.อ. มาตรา 326–328 และ พ.ร.บ.คอมพิวเตอร์ฯ มาตรา 14 — ใช้คำว่า "ถูกกล่าวหาว่า" หรือ "ผู้ต้องหา" จนกว่าศาลจะตัดสิน และระบุแหล่งที่มาของข้อกล่าวหา'},
+  {c:'law',s:1,t:['ฆาตกร','ไอ้โจร'],w:'ตัดสินความผิดล่วงหน้า',law:'ใช้ "ผู้ต้องสงสัย" หรือ "ผู้ต้องหา" ก่อนศาลตัดสิน เพื่อเลี่ยงความผิดฐานหมิ่นประมาทและตามหลักสันนิษฐานว่าบริสุทธิ์'},
+];
+
+let DYN_RULES=[]; // approved words from the monthly guideline check
+/* ---------- Language rules ---------- */
+// [wrong, right, exceptions?]
+const SPELL=[
+  ['อนุญาติ','อนุญาต'],['โอกาศ','โอกาส'],['ศรีษะ','ศีรษะ'],['สังเกตุ','สังเกต'],['บังเอิน','บังเอิญ'],['กระเพรา','กะเพรา'],
+  ['ผลลัพท์','ผลลัพธ์'],['ปฎิ','ปฏิ'],['ปฏิกริยา','ปฏิกิริยา'],['เบรค','เบรก'],['อีเมล์','อีเมล'],['ลายเซ็นต์','ลายเซ็น'],
+  ['เซ็นต์สัญญา','เซ็นสัญญา'],['เซ็นต์ชื่อ','เซ็นชื่อ'],['คำนวน','คำนวณ'],['ผาสุข','ผาสุก'],['ปรากฎ','ปรากฏ'],['กฏ','กฎ',['ปรากฏ']],
+  ['ไอศครีม','ไอศกรีม'],['โควต้า','โควตา'],['ลิขสิทธ์','ลิขสิทธิ์'],['ศักดิ์สิทธ์','ศักดิ์สิทธิ์'],['สัญญาน','สัญญาณ'],['ทะเลสาป','ทะเลสาบ'],
+  ['อัพเดท','อัปเดต'],['อัพเดต','อัปเดต'],['อัปเดท','อัปเดต'],['อัพโหลด','อัปโหลด'],['คอมเม้นต์','คอมเมนต์'],['คอมเม้นท์','คอมเมนต์'],['คอมเมนท์','คอมเมนต์'],
+  ['โน๊ต','โน้ต'],['แอพพลิเคชั่น','แอปพลิเคชัน'],['แอปพลิเคชั่น','แอปพลิเคชัน'],['แอพ','แอป',['แอพพลิเคชั่น']],['เว็ปไซต์','เว็บไซต์'],['เว็บไซท์','เว็บไซต์'],['เว็ป','เว็บ',['เว็ปไซต์']],
+  ['ช็อค','ช็อก',['ช็อคโกแลต']],['ล็อค','ล็อก'],['บล็อค','บล็อก'],['เปอร์เซ็น','เปอร์เซ็นต์'],['ซีรี่ย์','ซีรีส์'],['ซีรีย์','ซีรีส์'],['ซีรี่ส์','ซีรีส์'],
+  ['รสชาด','รสชาติ'],['เกล็ดความรู้','เกร็ดความรู้'],['อานิสงค์','อานิสงส์'],['ภาพยนต์','ภาพยนตร์'],['รถยนตร์','รถยนต์'],['เครื่องยนตร์','เครื่องยนต์'],
+  ['นัยยะ','นัย'],['จราจล','จลาจล'],['สาธารณะสุข','สาธารณสุข'],['อัฒจรรย์','อัฒจันทร์'],['บิณฑบาตร','บิณฑบาต'],['กงศุล','กงสุล'],['คลินิค','คลินิก'],
+  ['โครงการณ์','โครงการ'],['เกมส์','เกม',['เอเชียนเกมส์','ซีเกมส์','โอลิมปิกเกมส์','พาราเกมส์','อาเซียนพาราเกมส์']],['ผัดไท','ผัดไทย'],['ดำริห์','ดำริ'],['สำอางค์','สำอาง'],['ทรมาณ','ทรมาน'],
+  ['พิสูตร','พิสูจน์'],['มาตราการ','มาตรการ'],['เหตุการ','เหตุการณ์'],['สถานการ','สถานการณ์'],['ประสบการ','ประสบการณ์'],['ปาฏิหาร','ปาฏิหาริย์'],['ประนีต','ประณีต'],
+  ['ครรไกร','กรรไกร'],['อุโมง','อุโมงค์'],['โปรโมท','โปรโมต'],['เซิฟเวอร์','เซิร์ฟเวอร์'],['ไลค์','ไลก์'],['เฟสบุ๊ค','เฟซบุ๊ก'],['เฟซบุ๊ค','เฟซบุ๊ก'],['เฟสบุ๊ก','เฟซบุ๊ก'],
+  ['ยูทูป','ยูทูบ'],['ทวิตเตอร์','X (ทวิตเตอร์)'],['กิติมศักดิ์','กิตติมศักดิ์'],['ผู้ประสพภัย','ผู้ประสบภัย'],['ประสพ','ประสบ'],['อุบัติการ','อุบัติการณ์'],
+  ['เอกเทศน์','เอกเทศ'],['ทูตานุทูต','ทูตานุทูต'],['ใบอนุญาติ','ใบอนุญาต'],['กฏหมาย','กฎหมาย'],['ผิดกฏ','ผิดกฎ'],['ทแยง','ทแยง'],['สักการะ','สักการะ'],
+  ['ขาดดุลย์','ขาดดุล'],['สมดุลย์','สมดุล'],['งบดุลย์','งบดุล'],['เกษียน','เกษียณ'],['เกษียร','เกษียณ',['เกษียรสมุทร']],['ปฏิสันถาน','ปฏิสันถาร'],['ลูกเต๋า','ลูกเต๋า'],
+  ['ชโลม','ชโลม'],['ตระเวณ','ตระเวน'],['ถั่วพู','ถั่วพู'],['พากษ์','พากย์'],['ผลัดวันประกันพรุ่ง','ผัดวันประกันพรุ่ง'],['ผัดเปลี่ยน','ผลัดเปลี่ยน'],['อนุสาวรีย์','อนุสาวรีย์'],
+  ['จัดสรรค์','จัดสรร'],['สรรหา','สรรหา'],['คุ้กกี้','คุกกี้'],['แก๊ซ','แก๊ส'],['แกงบวช','แกงบวด'],['ไต้ฝุ่น','ไต้ฝุ่น'],['โล่ห์','โล่'],['สัปปะรด','สับปะรด'],
+].filter(([a,b])=>a!==b);
+
+const INFORMAL=['โคตร','เว่อร์','ป่ะ','อ่ะ','เนี่ย','ชิมิ','จุงเบย','แบบว่า','ปังมาก','ตัวแม่','เยอะแยะตาแป๊ะไก่','มั้ย','ด่ะ','จ้า','จ้ะ','อ๊ะ','เจ๋ง','แจ่มแมว','ฟิน'];
+const TH_COMB=/[ัิ-ฺ็-๎]/;
+
+/* ---------- Helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const isThai=ch=>ch && ch.charCodeAt(0)>=0x0E00 && ch.charCodeAt(0)<=0x0E7F;
+
+function findAll(text,term){
+  const out=[];const lower=/[A-Za-z]/.test(term);
+  const hay=lower?text.toLowerCase():text;const nd=lower?term.toLowerCase():term;
+  let i=hay.indexOf(nd);
+  while(i!==-1){out.push(i);i=hay.indexOf(nd,i+1);}
+  return out;
+}
+function covered(text,s,e,words){
+  if(!words) return false;
+  for(const w of words){
+    const from=Math.max(0,s-w.length);
+    let j=text.indexOf(w,from);
+    while(j!==-1 && j<=s){ if(j+w.length>=e) return true; j=text.indexOf(w,j+1); }
+  }
+  return false;
+}
+function inQuotes(text,s){
+  const ls=text.lastIndexOf('\n',s-1)+1;const seg=text.slice(ls,s);
+  const o=seg.lastIndexOf('“'),c=seg.lastIndexOf('”');
+  if(o>c) return true;
+  return ((seg.match(/"/g)||[]).length%2)===1;
+}
+
+/* ---------- Scanner ---------- */
+function scan(text){
+  const F=[];
+  const firstNL=text.indexOf('\n');const headEnd=firstNL===-1?text.length:firstNL;
+  const tagSpans=[]; { const re=/#[^\s#]+/g; let m; while((m=re.exec(text))) tagSpans.push([m.index,m.index+m[0].length]); }
+  const inTag=(s0,e0)=>tagSpans.some(([a,b])=>s0>=a&&e0<=b);
+  const taken=new Map(); // dedupe by cat+range
+  const push=(f)=>{
+    const k=f.kind+':'+f.start+':'+f.end;
+    if(taken.has(k)){const prev=taken.get(k); if(prev.sev>=f.sev) return; F.splice(F.indexOf(prev),1);}
+    // drop if fully inside another same-category finding of >= severity
+    for(const g of F){ if(g.kind===f.kind && g.cat===f.cat && g.start<=f.start && g.end>=f.end && g.sev>=f.sev && g!==f) return; }
+    for(let i=F.length-1;i>=0;i--){const g=F[i]; if(g.kind===f.kind && g.cat===f.cat && f.start<=g.start && f.end>=g.end && f.sev>=g.sev){F.splice(i,1);taken.delete(g.kind+':'+g.start+':'+g.end);} }
+    taken.set(k,f);F.push(f);
+  };
+
+  RULES.concat(DYN_RULES).forEach((r,ri)=>{
+    const hits=[];
+    if(r.t){
+      // longest first so shorter terms get absorbed
+      [...r.t].sort((a,b)=>b.length-a.length).forEach(term=>{
+        for(const i of findAll(text,term)){
+          const e=i+term.length;
+          if(TH_COMB.test(text[e]||'')) continue;
+          if(covered(text,i,e,r.ex)) continue;
+          if(hits.some(h=>h[0]<=i && h[1]>=e)) continue;
+          hits.push([i,e]);
+        }
+      });
+    }
+    if(r.re){ r.re.lastIndex=0; let m; while((m=r.re.exec(text))){ if(!m[0]) {r.re.lastIndex++;continue;} hits.push([m.index,m.index+m[0].length]); } }
+    for(const [s,e] of hits){
+      const q=inQuotes(text,s);
+      let sev=r.s; if(q && sev>1 && r.c!=='child' && r.c!=='privacy') sev--;
+      push({kind:'risk',cat:r.c,sev,start:s,end:e,text:text.slice(s,e),why:r.w,law:r.law||CATS[r.c].law,quoted:q,inHead:s<headEnd,inTag:inTag(s,e),src:r.dyn?'update':'rule',rid:r.id||'r'+ri});
+    }
+  });
+
+  // Contextual checks (whole-text)
+  const has=c=>F.some(f=>f.cat===c && f.sev>=2);
+  if((has('graphic')||F.filter(f=>f.cat==='graphic').length>=2) && !/คำเตือน|เนื้อหาอาจ|ภาพอาจ|trigger warning|TW/i.test(text))
+    F.push({kind:'risk',cat:'graphic',sev:1,start:-1,end:-1,text:'ยังไม่มีคำเตือนเนื้อหา',why:'ข่าวมีคำบรรยายความรุนแรงแต่ไม่มีคำเตือนต้นโพสต์ การมีคำเตือนช่วยให้เข้าข้อยกเว้นด้านข่าวของ Meta และ YouTube ง่ายขึ้น',fixText:'เพิ่มบรรทัดแรก เช่น "⚠️ คำเตือน: เนื้อหามีรายละเอียดความรุนแรง"',src:'rule',rid:'ctx-warn'});
+  if(F.some(f=>f.cat==='selfharm') && !/1323/.test(text))
+    F.push({kind:'risk',cat:'selfharm',sev:2,start:-1,end:-1,text:'ยังไม่มีสายด่วนช่วยเหลือ',why:'ข่าวเกี่ยวกับการฆ่าตัวตายควรแนบช่องทางขอความช่วยเหลือ ตามแนวทางรายงานข่าวขององค์การอนามัยโลกและแนวปฏิบัติของแพลตฟอร์ม',fixText:'เพิ่มท้ายโพสต์: "หากคุณหรือคนใกล้ชิดต้องการความช่วยเหลือ โทรสายด่วนสุขภาพจิต 1323 ได้ตลอด 24 ชั่วโมง"',src:'rule',rid:'ctx-1323'});
+
+  // ----- Language -----
+  const L=(o)=>push(Object.assign({kind:'lang',sev:1,src:'rule'},o));
+  const spellHits=[];
+  [...SPELL].sort((a,b)=>b[0].length-a[0].length).forEach(([w,r,ex])=>{
+    for(const i of findAll(text,w)){
+      const e=i+w.length;
+      if(TH_COMB.test(text[e]||'') && w.length<4) continue;
+      if(covered(text,i,e,[r,...(ex||[])])) continue;
+      if(spellHits.some(h=>h[0]<=i && h[1]>=e)) continue;
+      spellHits.push([i,e]);
+      L({cat:'spell',start:i,end:e,text:w,replace:r,why:`สะกดตามพจนานุกรมราชบัณฑิตยสภาคือ "${r}"`,rid:'sp'});
+    }
+  });
+  const reLang=[
+    [/(?:ไหม|มั้ย|หรือเปล่า|หรือยัง|อะไร|ยังไง|อย่างไร|เหรอ|หรอ|ใช่ไหม|นะ)ค่ะ/g,m=>m.replace(/ค่ะ$/,'คะ'),'ประโยคคำถามหรือลงท้ายด้วย "นะ" ใช้ "คะ" (เสียงตรี)','grammar'],
+    [/(?:ขอบคุณ|ขอบพระคุณ|สวัสดี|ขอโทษ|ใช่|ได้)คะ(?=[\s.!,]|$)/g,m=>m.replace(/คะ$/,'ค่ะ'),'ประโยคบอกเล่าใช้ "ค่ะ" (เสียงโท)','grammar'],
+    [/ถูก(?:ชื่นชม|ชม|ยกย่อง|เชิญ|รัก|ขอบคุณ|สรรเสริญ)/g,m=>m.replace(/^ถูก/,'ได้รับการ'),'"ถูก" ในภาษาไทยใช้กับสิ่งที่ไม่พึงประสงค์ เรื่องดีควรใช้ "ได้รับ" หรือ "ได้รับการ"','grammar'],
+    [/ได้ทำการ/g,()=>'ได้','"ทำการ" เป็นคำฟุ่มเฟือยที่พบบ่อยในข่าว ตัดออกได้','style'],
+    [/เป็นอะไรที่/g,()=>'','สำนวนแปลจากภาษาอังกฤษ ("is something that") เขียนตรง ๆ จะกระชับกว่า','style'],
+    [/ในส่วนของ/g,()=>'สำหรับ','สำนวนฟุ่มเฟือย ใช้ "สำหรับ" หรือ "ใน" ได้','style'],
+    [/([ก-ฮะ-ๅ็-๎])ๆ/g,m=>m[0]+' ๆ','ราชบัณฑิตยสภากำหนดให้เว้นวรรคหน้าและหลังไม้ยมก (ๆ)','format'],
+    [/ๆ\s?ๆ/g,()=>'ๆ','ไม่ใช้ไม้ยมกซ้อน','format'],
+    [/([ก-ฮ])\1{3,}/g,m=>m.slice(0,1),'ลากตัวอักษรซ้ำเป็นภาษาแชต ไม่เหมาะกับข่าว','style'],
+    [/5{3,}\+*/g,()=>'','"555" เป็นภาษาแชต ไม่เหมาะกับข่าว','style'],
+    [/[!！]{2,}|[?？]{2,}|[!?]{3,}/g,m=>m[0],'เครื่องหมายซ้ำหลายตัวทำให้ดูเป็นพาดหัวเร้าอารมณ์ และลดความน่าเชื่อถือ','style'],
+    [/(?<=\S) {2,}(?=\S)/g,()=>' ','เว้นวรรคซ้อนสองครั้ง','format'],
+    [/ทำการ(?!ตรวจสอบแล้ว)/g,()=>'','"ทำการ" มักเป็นคำฟุ่มเฟือย เช่น "ทำการตรวจสอบ" เขียนเป็น "ตรวจสอบ" ได้','style',['ที่ทำการ','วันทำการ','เวลาทำการ','ชั่วโมงทำการ','ได้ทำการ']],
+  ];
+  reLang.forEach(([re,fn,why,cat,ex])=>{
+    re.lastIndex=0;let m;
+    while((m=re.exec(text))){
+      const s=m.index,e=s+m[0].length;
+      if(ex && covered(text,s,e,ex)) continue;
+      if(cat==='format' && m[0].endsWith('ๆ') && text[e]!==undefined && text[e]!==' ' && text[e]!=='\n'){} // still flag
+      const rep=fn(m[0]);
+      L({cat,start:s,end:e,text:m[0],replace:rep===m[0]?undefined:rep,why,rid:'lg'+cat});
+    }
+  });
+  // missing space after ๆ
+  { const re=/ๆ(?=[ก-ฮเ-ไ])/g;let m; while((m=re.exec(text))){ const s=m.index; if(F.some(f=>f.kind==='lang'&&f.start<=s&&f.end>s)) continue; L({cat:'format',start:s,end:s+1,text:'ๆ',replace:'ๆ ',why:'ควรเว้นวรรคหลังไม้ยมก',rid:'lgf2'}); } }
+  // informal
+  INFORMAL.forEach(w=>{ for(const i of findAll(text,w)){ const e=i+w.length; if(TH_COMB.test(text[e]||'')) continue; if(inQuotes(text,i)) continue; L({cat:'style',start:i,end:e,text:w,why:'ภาษาปาก ไม่เหมาะกับข่าวหรือบทความ (ยกเว้นในคำพูดที่อ้างอิง)',rid:'inf'}); } });
+  // brackets / quotes balance
+  const pairs=[['(',')'],['“','”'],['[',']']];
+  pairs.forEach(([o,c])=>{const a=text.split(o).length-1,b=text.split(c).length-1; if(a!==b){ const i=text.indexOf(a>b?o:c); L({cat:'format',start:i,end:i+1,text:a>b?o:c,why:`เครื่องหมาย ${o} ${c} ไม่ครบคู่ (${a} เปิด / ${b} ปิด)`,rid:'br'});}});
+  if(((text.match(/"/g)||[]).length)%2===1){const i=text.lastIndexOf('"');L({cat:'format',start:i,end:i+1,text:'"',why:'เครื่องหมายคำพูด " ไม่ครบคู่',rid:'q'});}
+  // long run without space
+  { const re=/[^\s]{160,}/g;let m; while((m=re.exec(text))) L({cat:'style',start:m.index,end:m.index+m[0].length,text:m[0].slice(0,24)+'…',why:`ประโยคยาว ${m[0].length} ตัวอักษรโดยไม่เว้นวรรค อ่านยากบนมือถือ ภาษาไทยใช้การเว้นวรรคแบ่งประโยค`,rid:'long'}); }
+  // mixed digits
+  if(/[๐-๙]/.test(text) && /[0-9]/.test(text)){const i=text.search(/[๐-๙]/);L({cat:'format',start:i,end:i+1,text:text[i],why:'ใช้ทั้งเลขไทยและเลขอารบิกในโพสต์เดียว ควรเลือกแบบเดียวให้สม่ำเสมอ',rid:'dig'});}
+  // emoji / hashtags
+  const emo=(text.match(/\p{Extended_Pictographic}/gu)||[]).length;
+  if(emo>6) L({cat:'style',start:-1,end:-1,text:`อีโมจิ ${emo} ตัว`,why:'อีโมจิมากเกินไปลดความน่าเชื่อถือของข่าว',rid:'emo'});
+  const tags=(text.match(/#[^\s#]+/g)||[]).length;
+  if(tags>5) L({cat:'style',start:-1,end:-1,text:`แฮชแท็ก ${tags} อัน`,why:'X แนะนำไม่เกิน 1–2 แฮชแท็ก ส่วน Instagram จำกัดสูงสุด 30 อัน แฮชแท็กจำนวนมากทำให้ดูเป็นสแปม',rid:'tag'});
+  if(headEnd>100) L({cat:'format',start:0,end:headEnd,text:'พาดหัว (บรรทัดแรก)',why:`พาดหัวยาว ${headEnd} ตัวอักษร ชื่อคลิป YouTube จำกัด 100 ตัวอักษร`,rid:'head'});
+
+  return applyAllow(text,F);
+}
+
+/* ---------- Allowlist (exceptions) ---------- */
+let allowWords=[]; // [{id, word}]
+function applyAllow(text,F){
+  if(!allowWords.length) return F;
+  const ranges=[];
+  for(const {word} of allowWords){ if(!word) continue; for(const i of findAll(text,word)) ranges.push([i,i+word.length,word]); }
+  const set=new Set(allowWords.map(a=>a.word.toLowerCase()));
+  return F.filter(f=>{
+    if(set.has(String(f.text).toLowerCase())) return false;
+    if(f.start<0) return true;
+    return !ranges.some(([s,e])=>s<=f.start && e>=f.end);
+  });
+}
+
+const GL={"graphic": {"fb": "https://transparency.meta.com/policies/community-standards/violent-graphic-content/", "ig": "https://transparency.meta.com/policies/community-standards/violent-graphic-content/", "yt": "https://support.google.com/youtube/answer/2802008", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/sensitive-mature-themes", "x": "https://help.x.com/en/rules-and-policies/media-policy", "bs": "https://bsky.social/about/support/community-guidelines"}, "selfharm": {"fb": "https://transparency.meta.com/policies/community-standards/suicide-self-injury/", "ig": "https://transparency.meta.com/policies/community-standards/suicide-self-injury/", "yt": "https://support.google.com/youtube/answer/2802245", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/mental-behavioral-health", "x": "https://help.x.com/en/rules-and-policies/glorifying-self-harm", "bs": "https://bsky.social/about/support/community-guidelines"}, "hate": {"fb": "https://transparency.meta.com/policies/community-standards/hateful-conduct/", "ig": "https://transparency.meta.com/policies/community-standards/hateful-conduct/", "yt": "https://support.google.com/youtube/answer/2801939", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/safety-civility", "x": "https://help.x.com/en/rules-and-policies/hateful-conduct-policy", "bs": "https://bsky.social/about/support/community-guidelines"}, "harass": {"fb": "https://transparency.meta.com/policies/community-standards/bullying-harassment/", "ig": "https://transparency.meta.com/policies/community-standards/bullying-harassment/", "yt": "https://support.google.com/youtube/answer/2802268", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/safety-civility", "x": "https://help.x.com/en/rules-and-policies/abusive-behavior", "bs": "https://bsky.social/about/support/community-guidelines"}, "violent": {"fb": "https://transparency.meta.com/policies/community-standards/violence-incitement/", "ig": "https://transparency.meta.com/policies/community-standards/violence-incitement/", "yt": "https://support.google.com/youtube/answer/2802008", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/safety-civility", "x": "https://help.x.com/en/rules-and-policies/violent-speech", "bs": "https://bsky.social/about/support/community-guidelines"}, "sexual": {"fb": "https://transparency.meta.com/policies/community-standards/adult-sexual-exploitation/", "ig": "https://transparency.meta.com/policies/community-standards/adult-sexual-exploitation/", "yt": "https://support.google.com/youtube/answer/2802002", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/sensitive-mature-themes", "x": "https://help.x.com/en/rules-and-policies/intimate-media", "bs": "https://bsky.social/about/support/community-guidelines"}, "child": {"fb": "https://transparency.meta.com/policies/community-standards/child-sexual-exploitation-abuse-nudity/", "ig": "https://transparency.meta.com/policies/community-standards/child-sexual-exploitation-abuse-nudity/", "yt": "https://support.google.com/youtube/answer/2801999", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/youth-safety", "x": "https://help.x.com/en/rules-and-policies/sexual-exploitation-policy", "bs": "https://bsky.social/about/support/community-guidelines"}, "privacy": {"fb": "https://transparency.meta.com/policies/community-standards/privacy-violations-image-privacy-rights/", "ig": "https://transparency.meta.com/policies/community-standards/privacy-violations-image-privacy-rights/", "yt": "https://support.google.com/youtube/answer/7671399", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/privacy-security", "x": "https://help.x.com/en/rules-and-policies/personal-information", "bs": "https://bsky.social/about/support/community-guidelines"}, "misinfo": {"fb": "https://transparency.meta.com/policies/community-standards/misinformation/", "ig": "https://transparency.meta.com/policies/community-standards/misinformation/", "yt": "https://support.google.com/youtube/answer/10834785", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/integrity-authenticity", "x": "https://help.x.com/en/rules-and-policies/election-integrity-policy", "bs": "https://bsky.social/about/support/community-guidelines"}, "ai": {"fb": "https://transparency.meta.com/policies/community-standards/misinformation/", "ig": "https://transparency.meta.com/policies/community-standards/misinformation/", "yt": "https://support.google.com/youtube/answer/14328491", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/integrity-authenticity", "x": "https://help.x.com/en/rules-and-policies/manipulated-media", "bs": "https://bsky.social/about/support/community-guidelines"}, "bait": {"fb": "https://transparency.meta.com/features/approach-to-ranking/types-of-content-we-demote/", "ig": "https://transparency.meta.com/features/approach-to-ranking/types-of-content-we-demote/", "yt": "https://support.google.com/youtube/answer/2801973", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/fyf-standards", "x": "https://help.x.com/en/rules-and-policies/authenticity", "bs": "https://bsky.social/about/support/community-guidelines"}, "regulated": {"fb": "https://transparency.meta.com/policies/community-standards/restricted-goods-services/", "ig": "https://transparency.meta.com/policies/community-standards/restricted-goods-services/", "yt": "https://support.google.com/youtube/answer/9229611", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/regulated-commercial-activities", "x": "https://help.x.com/en/rules-and-policies/illegal-regulated-behaviors", "bs": "https://bsky.social/about/support/community-guidelines"}, "weapons": {"fb": "https://transparency.meta.com/policies/community-standards/restricted-goods-services/", "ig": "https://transparency.meta.com/policies/community-standards/restricted-goods-services/", "yt": "https://support.google.com/youtube/answer/7667605", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/regulated-commercial-activities", "x": "https://help.x.com/en/rules-and-policies/illegal-regulated-behaviors", "bs": "https://bsky.social/about/support/community-guidelines"}, "scam": {"fb": "https://transparency.meta.com/policies/community-standards/fraud-and-scams/", "ig": "https://transparency.meta.com/policies/community-standards/fraud-and-scams/", "yt": "https://support.google.com/youtube/answer/2801973", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/regulated-commercial-activities", "x": "https://help.x.com/en/rules-and-policies/authenticity", "bs": "https://bsky.social/about/support/community-guidelines"}, "terror": {"fb": "https://transparency.meta.com/policies/community-standards/dangerous-individuals-organizations/", "ig": "https://transparency.meta.com/policies/community-standards/dangerous-individuals-organizations/", "yt": "https://support.google.com/youtube/answer/9229472", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/safety-civility", "x": "https://help.x.com/en/rules-and-policies/perpetrators-of-violent-attacks", "bs": "https://bsky.social/about/support/community-guidelines"}, "profanity": {"fb": "https://transparency.meta.com/policies/community-standards/bullying-harassment/", "ig": "https://transparency.meta.com/policies/community-standards/bullying-harassment/", "yt": "https://support.google.com/youtube/answer/6162278", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/safety-civility", "x": "https://help.x.com/en/rules-and-policies/abusive-behavior", "bs": "https://bsky.social/about/support/community-guidelines"}, "reach": {"fb": "https://transparency.meta.com/policies/age-appropriate-content/", "ig": "https://help.instagram.com/2635536099905516", "yt": "https://support.google.com/youtube/answer/6162278", "tt": "https://www.tiktok.com/safety/en/policies-and-engagement/fyf-standards", "x": "https://help.x.com/en/rules-and-policies/content-monetization-standards", "bs": "https://bsky.social/about/support/community-guidelines"}};
+const GLNAME={fb:"Meta Community Standards",ig:"Meta Community Standards",yt:"YouTube",tt:"TikTok Community Guidelines",x:"The X Rules",bs:"Bluesky Community Guidelines"};
+function glink(cat,p){ return (GL[cat]||{})[p]||null; }
+/* ---------- Platform level ---------- */
+function platLevel(f,p){
+  const c=CATS[f.cat]||CATS.other; const e=c.plat[p]; if(!e) return 0;
+  let lv=e[0]; if(f.sev===3) lv=Math.min(3,lv+1); if(f.sev===1) lv=Math.max(1,lv-1);
+  if(f.cat==='profanity' && p==='yt' && f.inHead) lv=Math.max(lv,2);
+  if(f.cat==='bait' && f.inHead && (p==='yt')) lv=Math.max(lv,1);
+  if(f.cat==='reach'){ if(f.inTag && (p==='ig'||p==='tt'||p==='yt')) lv=2; if(f.inHead && (p==='yt'||p==='tt')) lv=2; }
+  return lv;
+}
+function platText(f,p){ const c=CATS[f.cat]||CATS.other; let t=(c.plat[p]||[])[1]||''; if(f.cat==='profanity'&&p==='yt'&&f.inHead) t='อยู่ในบรรทัดแรกซึ่งใช้เป็นชื่อคลิป: คำหยาบในชื่อคลิปหรือภาพปกทำให้ได้โฆษณาแบบจำกัดหรือไม่มีโฆษณา';
+  if(f.cat==='reach'&&f.inTag&&(p==='ig'||p==='tt'||p==='yt')) t='อยู่ในแฮชแท็ก: '+t+' · แฮชแท็กทำให้ระบบจัดหมวดโพสต์ตามคำนั้นโดยตรง';
+  else if(f.cat==='reach'&&f.inHead&&(p==='yt'||p==='tt')) t='อยู่ในพาดหัว/ชื่อคลิป: '+t;
+  return t; }
+
+/* ---------- Counting ---------- */
+const seg=('Segmenter' in Intl)?new Intl.Segmenter('th',{granularity:'grapheme'}):null;
+function graphemes(s){ if(!seg) return [...s].length; let n=0; for(const _ of seg.segment(s)) n++; return n; }
+function xCount(s){
+  const urls=s.match(/https?:\/\/\S+/g)||[]; let t=s; urls.forEach(u=>t=t.replace(u,''));
+  let n=urls.length*23;
+  for(const ch of t){ const cp=ch.codePointAt(0);
+    const light=(cp<=4351)||(cp>=8192&&cp<=8205)||(cp>=8208&&cp<=8223)||(cp>=8242&&cp<=8247);
+    n+=light?1:2; }
+  return n;
+}
+function ytParts(text){ const nl=text.indexOf('\n'); return nl===-1?{head:text,desc:'',off:text.length}:{head:text.slice(0,nl),desc:text.slice(nl+1),off:nl+1}; }
+function countFor(p,text){
+  if(p.count==='desc') return [...ytParts(text).desc].length;
+  if(p.count==='x') return xCount(text);
+  if(p.count==='graph') return graphemes(text);
+  return [...text].length;
+}
+
+/* ---------- State ---------- */
+const ta=$('#ta'),bd=$('#bd');
+let enabled=new Set(PLATS.map(p=>p.id));
+let tab='risk';
+let findings=[],aiFindings=[],aiSummary=null,aiForText=null;
+let dismissed=new Set();
+const keyOf=f=>f.rid+'|'+f.text+'|'+f.start;
+
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+
+/* ---------- Render ---------- */
+function renderPlats(){
+  $('#plats').innerHTML=PLATS.map(p=>`<button type="button" class="pchip" style="--pc:var(--c-${p.id})" data-p="${p.id}" aria-pressed="${enabled.has(p.id)}"><span class="dot">${p.short}</span>${p.name}</button>`).join('');
+}
+function allFindings(){
+  const text=ta.value;
+  const ai=aiForText===text?aiFindings:[];
+  return applyAllow(text,findings.concat(ai)).filter(f=>!dismissed.has(keyOf(f)));
+}
+function cutPoints(text){
+  const pts=[];
+  const snap=i=>{ if(!seg) return i; for(const g of seg.segment(text)){ if(g.index>=i) return g.index; } return text.length; };
+  const nthCp=(str,limit)=>{ let n=0,i=0; for(const ch of str){ if(n===limit) return i; n++; i+=ch.length; } return -1; };
+  for(const p of PLATS){ if(!enabled.has(p.id)) continue;
+    let idx=-1;
+    if(p.count==='chars'){ idx=nthCp(text,p.limit); if(idx>=0) idx=snap(idx); }
+    else if(p.count==='desc'){ const yp=ytParts(text); const d=nthCp(yp.desc,p.limit); if(d>=0) idx=snap(yp.off+d);
+      const tIdx=nthCp(yp.head,100); if(tIdx>=0) pts.push([snap(tIdx),'YT ชื่อคลิป','yt']); }
+    else if(p.count==='graph'){ if(seg){ let n=0; for(const g of seg.segment(text)){ if(n===p.limit){ idx=g.index; break; } n++; } } }
+    else if(p.count==='x'){ const urls=[]; { const re=/https?:\/\/\S+/g; let m; while((m=re.exec(text))) urls.push([m.index,m.index+m[0].length]); }
+      let n=0,i=0; while(i<text.length){ const u=urls.find(r=>r[0]===i); let w,len;
+        if(u){ w=23; len=u[1]-u[0]; } else { const cp=text.codePointAt(i); len=cp>0xFFFF?2:1; w=(cp<=4351)||(cp>=8192&&cp<=8205)||(cp>=8208&&cp<=8223)||(cp>=8242&&cp<=8247)?1:2; }
+        if(n+w>p.limit){ idx=i; break; } n+=w; i+=len; }
+      if(idx>=0) idx=snap(idx); }
+    if(idx>=0 && idx<text.length) pts.push([idx,p.id==='yt'?'YT คำอธิบาย':p.name,p.id]);
+  }
+  const m=new Map(); for(const [i,l,id] of pts){ if(m.has(i)){ m.get(i).l+=' · '+l; } else m.set(i,{l,id}); }
+  return [...m.entries()].sort((a,b)=>a[0]-b[0]).map(([i,o])=>[i,o.l,o.id]);
+}
+function renderBackdrop(list){
+  const text=ta.value; const n=text.length;
+  const lv=new Int8Array(n), lg=new Uint8Array(n), rc=new Uint8Array(n);
+  for(const f of list){ if(f.start<0) continue; for(let i=f.start;i<Math.min(f.end,n);i++){ if(f.kind==='lang') lg[i]=1; else if(f.cat==='reach') rc[i]=1; else if(f.sev>lv[i]) lv[i]=f.sev; } }
+  const cuts=cutPoints(text); let ci=0, lastCut=-999, alt=false;
+  let html='',i=0;
+  while(i<n){
+    while(ci<cuts.length && cuts[ci][0]<=i){ if(cuts[ci][0]===i){ alt=(i-lastCut<40)?!alt:false; lastCut=i; html+=`<span class="cut${alt?' alt':''}" style="--pc:var(--c-${cuts[ci][2]})" data-l="${esc(cuts[ci][1])}"></span>`; } ci++; }
+    const nextCut=ci<cuts.length?cuts[ci][0]:n;
+    let j=i+1; while(j<n && j<nextCut && lv[j]===lv[i] && lg[j]===lg[i] && rc[j]===rc[i]) j++;
+    const chunk=esc(text.slice(i,j));
+    const cls=[lv[i]?'s'+lv[i]:'',lg[i]?'lg':'',(!lv[i]&&rc[i])?'rc':''].filter(Boolean).join(' ');
+    html+=cls?`<mark class="${cls}">${chunk}</mark>`:chunk;
+    i=j; }
+  bd.innerHTML=html+'\n ';
+  bd.scrollTop=ta.scrollTop;
+}
+const VERD=['พร้อมโพสต์','มีข้อสังเกต','ควรปรับก่อนโพสต์','เสี่ยงถูกลบ/จำกัด'];
+function renderBoard(list){
+  const text=ta.value;
+  { const rs=list.filter(f=>f.cat==='reach'); const box=$('#reachSum');
+    if(rs.length&&text.trim()){ const words=[...new Set(rs.map(f=>f.text))];
+      const hot=rs.filter(f=>f.inHead||f.inTag);
+      box.innerHTML=`<b>เตือนด้านการมองเห็นและโฆษณา:</b> มีคำเกี่ยวกับความรุนแรงหรือความตาย ${words.length} คำ (${words.slice(0,6).map(w=>esc(w)).join(', ')}${words.length>6?' …':''}) ไม่ผิดกฎชุมชน แต่ TikTok อาจไม่ดันเข้า For You, Instagram อาจไม่แนะนำใน Explore/Reels และ YouTube อาจจำกัดโฆษณา${hot.length?` · <b>${hot.length} คำอยู่ในพาดหัวหรือแฮชแท็ก</b> ซึ่งมีผลมากที่สุด ควรเปลี่ยนเป็นคำกลางหรือแฮชแท็กกลาง`:''}`;
+      box.hidden=false; } else box.hidden=true; }
+  $('#board').innerHTML=PLATS.map(p=>{
+    const on=enabled.has(p.id);
+    const risks=list.filter(f=>f.kind==='risk' && platLevel(f,p.id)>0);
+    let lv=0,top=null;
+    for(const f of risks){ const l=platLevel(f,p.id); if(l>lv){lv=l;top=f;} }
+    const cnt=countFor(p,text); const over=cnt>p.limit;
+    let why='';
+    if(top) why=`${CATS[top.cat].name}: ${platText(top,p.id)}`;
+    if(over){ lv=Math.max(lv,2); why=(p.id==='yt'?`คำอธิบายคลิปยาวเกิน ${p.limit.toLocaleString()} ตัวอักษร`:p.id==='x'||p.id==='bs'?`ยาวเกินจำกัด ${p.limit} ${p.id==='bs'?'ตัวอักษร (นับแบบ grapheme)':'หน่วย'} แบ่งเป็นเธรดหรือย่อ`: `ยาวเกินจำกัด ${p.limit.toLocaleString()} ตัวอักษร`)+(why?' · '+why:''); }
+    let ytTitle=0; if(p.id==='yt'){ ytTitle=[...ytParts(text).head].length; if(ytTitle>100){ lv=Math.max(lv,2); why=`ชื่อคลิป (บรรทัดแรก) ยาว ${ytTitle} ตัวอักษร เกิน 100`+(why?' · '+why:''); } }
+    const n=risks.length;
+    const pill=!text.trim()?'<span class="pill lx">รอข้อความ</span>':`<span class="pill l${lv}">${VERD[lv]}</span>`;
+    const catLv={}; for(const f of risks){ const l=platLevel(f,p.id); if(!catLv[f.cat]||l>catLv[f.cat]) catLv[f.cat]=l; }
+    const cats=Object.entries(catLv).filter(([c])=>glink(c,p.id)).sort((a,b)=>b[1]-a[1]);
+    const links=on&&text.trim()&&cats.length?`<div class="vlinks">${cats.map(([c,l])=>`<a class="${c==='reach'&&l===1?'lr':'l'+l}" href="${glink(c,p.id)}" target="_blank" rel="noopener noreferrer" title="เปิดแนวทางของ ${esc(p.name)} เรื่อง${esc(CATS[c].name)} ในแท็บใหม่">${esc(CATS[c].name)}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>`).join('')}</div>`:'';
+    return `<div class="vrow${on?'':' off'}" style="--pc:var(--c-${p.id})"><div class="vname"><span class="dot">${p.short}</span>${p.name}</div>${on?pill:'<span class="pill lx">ไม่ได้เลือก</span>'}<div class="vmeta${over||ytTitle>100?' over':''}">${p.id==='yt'?`ชื่อ ${ytTitle}/100 · คำอธิบาย ${cnt.toLocaleString()}/${p.limit.toLocaleString()}`:`${cnt.toLocaleString()} / ${p.limit.toLocaleString()}`}${n?` · ${n} จุด`:''}</div>${on&&why&&text.trim()?`<div class="vwhy">${esc(why)}</div>`:''}${links}</div>`;
+  }).join('');
+  $('#boardNote').textContent=aiForText===text&&aiFindings.length?'รวมผลจาก Claude แล้ว':'';
+}
+const REACHTIP='กระทบการมองเห็น/โฆษณา — ไม่ผิดกฎชุมชน ใช้ในข่าวได้ แต่แพลตฟอร์มอาจไม่แนะนำโพสต์หรือจำกัดโฆษณา โดยเฉพาะเมื่ออยู่ในพาดหัว ชื่อคลิป หรือแฮชแท็ก';
+const SEVTIP=['ภาษา/ตัวสะกด — คำสะกดผิดตามราชบัณฑิตยสภา ไวยากรณ์ สำนวนฟุ่มเฟือย ภาษาปาก และรูปแบบการพิมพ์ ไม่มีผลต่อกฎของแพลตฟอร์ม แต่มีผลต่อความน่าเชื่อถือ','ข้อสังเกต — ใช้ในข่าวได้ตามปกติ แต่ระบบอัตโนมัติมักจับตา หรือมีข้อควรระวังด้านจริยธรรมหรือกฎหมาย ให้บรรณาธิการพิจารณาตามบริบท','ควรปรับ — ไม่ถึงขั้นถูกลบ แต่มีโอกาสถูกลดการมองเห็น ติดหน้าจอคำเตือน จำกัดอายุผู้ชม หรือได้โฆษณาแบบจำกัด ปรับถ้อยคำแล้วจะปลอดภัยกว่า','เสี่ยงสูง — มีโอกาสสูงที่แพลตฟอร์มจะลบโพสต์ ตัดโฆษณา หรือนับเป็นการทำผิดกฎ (strike) เช่น คำเหยียด การยุยงความรุนแรง การระบุตัวผู้เยาว์ ควรแก้ก่อนโพสต์ทุกครั้ง'];
+function sevLabel(f){ if(f.cat==='reach') return 'กระทบการมองเห็น/โฆษณา'; return f.kind==='lang'?({spell:'ตัวสะกด',grammar:'ไวยากรณ์',style:'สำนวน',format:'รูปแบบ'}[f.cat]||'ภาษา'):(['','ข้อสังเกต','ควรปรับ','เสี่ยงสูง'][f.sev]); }
+function renderList(list){
+  const risk=list.filter(f=>f.kind==='risk').sort((a,b)=>b.sev-a.sev||(a.start-b.start));
+  const lang=list.filter(f=>f.kind==='lang').sort((a,b)=>a.start-b.start);
+  $('#nRisk').textContent=risk.length;$('#nLang').textContent=lang.length;
+  const arr=tab==='risk'?risk:lang;
+  const box=$('#list');
+  if(!ta.value.trim()){box.innerHTML='<div class="empty">วางข่าวหรือบทความในช่องด้านซ้ายเพื่อเริ่มตรวจ</div>';}
+  else if(!arr.length){box.innerHTML=`<div class="empty">${tab==='risk'?'ไม่พบคำหรือประโยคเสี่ยงจากรายการคำที่ตัวตรวจรู้จัก ควรให้บรรณาธิการอ่านบริบททั้งข่าวอีกครั้งก่อนโพสต์':'ไม่พบปัญหาตัวสะกดหรือสำนวนจากรายการที่ตรวจ'}</div>`;}
+  else box.innerHTML=arr.map((f,idx)=>{
+    const c=CATS[f.cat]||CATS.other; const k=keyOf(f);
+    let imp='';
+    if(f.kind==='risk'){
+      const ps=PLATS.filter(p=>enabled.has(p.id)).map(p=>[p,platLevel(f,p.id)]).filter(x=>x[1]>0);
+      imp=ps.length?`<div class="pimp">${ps.map(([p,l])=>`<span class="${f.cat==='reach'&&l===1?'lr':'l'+l}" title="${esc(platText(f,p.id))}"><b>${p.short}</b>${['','สังเกต','ปรับ','เสี่ยง'][l]}</span>`).join('')}</div>`:'';
+    }
+    const fixT=f.fixText||(f.replace!==undefined?(f.replace===''?'ตัดคำนี้ออก':`แก้เป็น <b>${esc(f.replace)}</b>`):(f.kind==='risk'?esc(c.fix||''):''));
+    const plist=f.kind==='risk'?PLATS.filter(p=>enabled.has(p.id)&&platText(f,p.id)).map(p=>`<li><b style="color:var(--ink)">${p.name}</b> — ${esc(platText(f,p.id))}${glink(f.cat,p.id)?` <a href="${glink(f.cat,p.id)}" target="_blank" rel="noopener noreferrer">อ่านแนวทาง ↗</a>`:''}</li>`).join(''):'';
+    const links=(c.links||[]).map(([t,u])=>`<li><a href="${u}" target="_blank" rel="noopener">${esc(t)}</a></li>`).join('');
+    return `<div class="f s${f.sev} ${f.kind==='lang'?'lang':''}${f.cat==='reach'?' reach':''}" data-k="${esc(k)}">
+      <div class="f-top">
+        ${f.start>=0?`<button type="button" class="f-q" data-go="${f.start},${f.end}">${esc(f.text)}</button>`:`<span class="f-q" style="cursor:default;text-decoration:none">${esc(f.text)}</span>`}
+        <span class="f-cat">${f.kind==='risk'?esc(c.name)+' · ':''}<span class="tip" tabindex="0" data-tip="${esc(f.cat==='reach'?REACHTIP:SEVTIP[f.kind==='lang'?0:f.sev])}">${sevLabel(f)}</span></span>
+        ${f.src==='ai'?'<span class="tag ai">CLAUDE</span>':''}${f.src==='update'?'<span class="tag upd" title="คำจากการอัปเดตแนวทางรายเดือนที่บรรณาธิการอนุมัติแล้ว">อัปเดตใหม่</span>':''}${f.quoted?'<span class="tag q">ในคำพูดอ้างอิง</span>':''}${f.inHead&&f.kind==='risk'?'<span class="tag">พาดหัว</span>':''}${f.inTag?'<span class="tag tg">แฮชแท็ก</span>':''}
+      </div>
+      ${f.why?`<p>${esc(f.why)}</p>`:''}
+      ${fixT?`<p class="fix">→ ${fixT}</p>`:''}
+      ${f.law?`<div class="law">กฎหมายไทย: ${esc(f.law)}</div>`:''}
+      ${imp}
+      ${plist||links?`<details class="more"><summary>แนวทางของแต่ละแพลตฟอร์ม</summary><ul>${plist}</ul>${links?`<ul>${links}</ul>`:''}</details>`:''}
+      <div class="f-act">
+        ${f.replace!==undefined&&f.start>=0?`<button type="button" class="btn" data-fix="${idx}">${f.replace===''?'ตัดออก':'แก้ให้'}</button>`:''}
+        <button type="button" class="btn" data-dis="${esc(k)}">ข้าม</button>
+        ${f.start>=0&&f.text.length<=60?`<button type="button" class="btn" data-allow="${esc(f.text)}">เพิ่มเป็นคำยกเว้น</button>`:''}
+      </div></div>`;
+  }).join('');
+  box._arr=arr;
+  const nd=dismissed.size; const d=$('#dismissed'); d.hidden=!nd;
+  d.innerHTML=nd?`ข้ามไว้ ${nd} รายการ <button type="button" class="linkbtn" id="undis">แสดงทั้งหมดอีกครั้ง</button>`:'';
+}
+const LIMNOTE={fb:'โพสต์ข้อความ',ig:'แคปชัน (แฮชแท็กไม่เกิน 30)',yt:'',tt:'แคปชัน',x:'โพสต์ (บัญชีทั่วไป)',bs:'โพสต์ (นับแบบ grapheme)'};
+function renderLimits(){
+  const t=ta.value; const has=!!t.trim();
+  const rows=PLATS.map(p=>{
+    const on=enabled.has(p.id);
+    let meters;
+    if(p.id==='yt'){ const yp=ytParts(t); meters=[{label:'ชื่อคลิป (บรรทัดแรก)',n:[...yp.head].length,limit:100},{label:'คำอธิบาย (บรรทัดที่ 2 เป็นต้นไป)',n:[...yp.desc].length,limit:p.limit}]; }
+    else meters=[{label:LIMNOTE[p.id],n:countFor(p,t),limit:p.limit}];
+    return {p,on,meters,over:meters.some(m=>m.n>m.limit)};
+  });
+  const bad=[]; rows.filter(r=>r.on).forEach(r=>r.meters.forEach(m=>{ if(m.n>m.limit) bad.push(`${r.p.name}${r.meters.length>1?' '+m.label.split(' (')[0]:''} (+${(m.n-m.limit).toLocaleString()})`); }));
+  const head_=!has?'<span>ลิมิตความยาวของแต่ละแพลตฟอร์ม</span>':bad.length?`<span class="bad">เกินลิมิต: ${bad.join(', ')}</span>`:'<span><b>ความยาวผ่านทุกแพลตฟอร์มที่เลือก</b></span>';
+  $('#limits').innerHTML=`<div class="limits-h">${head_}<span>ใช้ไป / ลิมิต · จุดที่เกินมีเครื่องหมาย ¶ สีเดียวกับแพลตฟอร์มในต้นฉบับ</span></div><div class="lim-grid">${rows.map(r=>{
+    const ms=r.meters.map(m=>{ const pct=Math.min(100,m.n/m.limit*100); const left=m.limit-m.n;
+      const cls=m.n>m.limit?' over':pct>85?' near':'';
+      return `<div class="meter${cls}"><div class="m-l"><span>${esc(m.label)}</span><span>${m.n.toLocaleString()} / ${m.limit.toLocaleString()}</span></div><div class="bar"><i style="width:${pct.toFixed(1)}%"></i></div>${has?`<div class="m-l"><span>${left<0?'เกิน '+(-left).toLocaleString():'เหลือ '+left.toLocaleString()}</span></div>`:''}</div>`; }).join('');
+    return `<div class="lim${r.on?'':' off'}${r.over?' over':''}" style="--pc:var(--c-${r.p.id});border-top-color:var(--c-${r.p.id})"><div class="lim-t"><b>${r.p.name}</b></div>${ms}${r.p.id==='x'?'<div class="lim-n">ลิงก์นับ 23 · อีโมจินับ 2</div>':''}</div>`;
+  }).join('')}</div>`;
+}
+function renderCounts(){
+  renderLimits();
+  const t=ta.value; const words=(t.match(/\S+/g)||[]).length;
+  const T1='ตัวอักษร — นับทุกตัวรวมสระ วรรณยุกต์ เว้นวรรค และการขึ้นบรรทัด เช่น "ที่" = 3 ตัวอักษร เป็นวิธีนับของ Facebook, Instagram, TikTok และ YouTube';
+  const T2='grapheme — นับตามช่องที่ตาเห็น พยัญชนะที่มีสระบน/ล่างหรือวรรณยุกต์นับรวมเป็น 1 เช่น "ที่" = 1 grapheme ข้อความไทยจึงได้ตัวเลขน้อยกว่าแบบตัวอักษร Bluesky ใช้วิธีนี้ (ลิมิต 300)';
+  const T3='หน่วย X — วิธีนับของ X ตัวอักษรไทยและละตินนับ 1 อีโมจินับ 2 ลิงก์ทุกลิงก์นับ 23 ไม่ว่าจะยาวเท่าไร (ลิมิต 280 สำหรับบัญชีทั่วไป)';
+  const T4='บรรทัด — จำนวนบรรทัดทั้งหมด รวมบรรทัดว่างและบรรทัด "." ที่ใช้คั่นย่อหน้า บรรทัดแรกถือเป็นพาดหัว ใช้เป็นชื่อคลิป YouTube และเป็นข้อความที่คนเห็นก่อนกด "ดูเพิ่มเติม"';
+  $('#counts').innerHTML=`<span class="tip" tabindex="0" data-tip="${esc(T1)}">${[...t].length.toLocaleString()} ตัวอักษร</span><span class="tip" tabindex="0" data-tip="${esc(T2)}">${graphemes(t).toLocaleString()} grapheme</span><span class="tip" tabindex="0" data-tip="${esc(T3)}">X ${xCount(t).toLocaleString()} หน่วย</span><span class="tip" tabindex="0" data-tip="${esc(T4)}">${t? t.split('\n').length:0} บรรทัด</span>`;
+}
+function run(){
+  findings=scan(ta.value);
+  const list=allFindings();
+  renderBackdrop(list);renderBoard(list);renderList(list);renderCounts();renderAllow();renderVersions();
+}
+let tmr; ta.addEventListener('input',()=>{ clearTimeout(tmr); tmr=setTimeout(()=>{run(); LS.set('pc_draft2',ta.value);},180); renderBackdrop(allFindings()); });
+ta.addEventListener('scroll',()=>{bd.scrollTop=ta.scrollTop;});
+new ResizeObserver(()=>{bd.scrollTop=ta.scrollTop;}).observe(ta);
+
+/* ---------- Events ---------- */
+$('#plats').addEventListener('click',e=>{const b=e.target.closest('[data-p]'); if(!b) return; const id=b.dataset.p; if(enabled.has(id)){ if(enabled.size>1) enabled.delete(id);} else enabled.add(id); LS.set('pc_plats',[...enabled]); renderPlats(); run();});
+function setTab(t){tab=t;$('#tabRisk').setAttribute('aria-selected',t==='risk');$('#tabLang').setAttribute('aria-selected',t==='lang');renderList(allFindings());}
+$('#tabRisk').onclick=()=>setTab('risk');$('#tabLang').onclick=()=>setTab('lang');
+$('#list').addEventListener('click',e=>{
+  const go=e.target.closest('[data-go]');
+  if(go){ const [s,en]=go.dataset.go.split(',').map(Number); ta.focus(); ta.setSelectionRange(s,s); ta.blur(); ta.focus(); ta.setSelectionRange(s,en);
+    // scroll into view roughly
+    const before=ta.value.slice(0,s); const lines=before.split('\n').length; const lh=parseFloat(getComputedStyle(ta).lineHeight)||28;
+    if(ta.scrollHeight>ta.clientHeight) ta.scrollTop=Math.max(0,(lines-3)*lh);
+    ta.closest('.editor').scrollIntoView({block:'nearest',behavior:'smooth'}); return; }
+  const fx=e.target.closest('[data-fix]');
+  if(fx){ const f=$('#list')._arr[+fx.dataset.fix]; if(!f) return; const v=ta.value; if(v.slice(f.start,f.end)!==f.text){toast('ข้อความเปลี่ยนไปแล้ว ลองตรวจใหม่');return;}
+    ta.value=v.slice(0,f.start)+f.replace+v.slice(f.end); run(); LS.set('pc_draft2',ta.value); toast(f.replace===''?'ตัดออกแล้ว':'แก้แล้ว'); return; }
+  const al=e.target.closest('[data-allow]');
+  if(al){ addAllow(al.dataset.allow); return; }
+  const ds=e.target.closest('[data-dis]');
+  if(ds){ dismissed.add(ds.dataset.dis); run(); }
+});
+$('#dismissed').addEventListener('click',e=>{ if(e.target.id==='undis'){ dismissed.clear(); run(); }});
+
+function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>t.hidden=true,1800);}
+$('#btnCopy').onclick=async()=>{ try{ await navigator.clipboard.writeText(ta.value); toast('คัดลอกแล้ว'); }catch(e){ ta.focus(); ta.select(); toast('เลือกข้อความแล้ว กด Ctrl/⌘+C เพื่อคัดลอก'); } };
+let cfmAction=null, cfmReturn=null;
+function openConfirm(o){
+  o=o||{}; cfmAction=o.onOk||doClear; cfmReturn=document.activeElement;
+  $('#cfmTitle').textContent=o.title||'ยืนยันการล้างข้อความ?';
+  $('#cfmDesc').textContent=o.desc||'ข้อความในช่องต้นฉบับทั้งหมดจะถูกลบ และกู้คืนไม่ได้ ถ้ายังไม่ได้เก็บไว้ กด "ยกเลิก" แล้วคัดลอกข้อความก่อน';
+  $('#cfmOk').textContent=o.ok||'ตกลง ล้างข้อความ';
+  const m=$('#cfm'); m.hidden=false; document.body.style.overflow='hidden';
+  setTimeout(()=>$('#cfmCancel').focus(),0);
+}
+function closeConfirm(){ $('#cfm').hidden=true; document.body.style.overflow=''; if(cfmReturn&&cfmReturn.focus) cfmReturn.focus(); }
+function doClear(){
+  ta.value=''; dismissed.clear(); aiFindings=[]; aiForText=null;
+  LS.set('pc_draft2',''); ta.scrollTop=0; run();
+  $('#cfm').hidden=true; document.body.style.overflow=''; ta.focus(); toast('ล้างข้อความแล้ว');
+}
+$('#btnClear').onclick=()=>{ if(!ta.value.trim()){ doClear(); return; } openConfirm(); };
+$('#cfmOk').onclick=()=>{ const f=cfmAction; $('#cfm').hidden=true; document.body.style.overflow=''; if(f) f(); };
+$('#cfmCancel').onclick=closeConfirm;
+$('#cfm').addEventListener('click',e=>{ if(e.target.id==='cfm') closeConfirm(); });
+$('#cfm').addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ e.preventDefault(); closeConfirm(); }
+  if(e.key==='Tab'){ const a=$('#cfmCancel'),b=$('#cfmOk'); if(e.shiftKey&&document.activeElement===a){e.preventDefault();b.focus();} else if(!e.shiftKey&&document.activeElement===b){e.preventDefault();a.focus();} }
+});
+
+const SAMPLE=`ช็อก!! ศพหนุ่มถูกยิงเลือดสาดกลางซอย ตร.เร่งล่าตัวมือปืน
+เมื่อเวลา 22.30 น. ผู้สื่อข่าวได้รับแจ้งเหตุยิงกันในซอยวัดใหม่ พบศพนายสมชาย (นามสมมติ) อายุ 45 ปี นอนจมกองเลือดอยู่ข้างรถจักรยานยนต์ สภาพสุดสยอง
+.
+ชาวบ้านเล่าว่าผู้ตายเคยมีเรื่องกับพวกต่างด้าวในชุมชน "พวกนี้มันขี้ขโมยทุกคน" ขณะที่บางคนโพสต์ว่ามือปืนสมควรโดนยิงบ้าง เบื้องต้นตำรวจได้ทำการตรวจสอบกล้องวงจรปิดๆ รอบที่เกิดเหตุ พร้อมสังเกตุพบปลอกกระสุน 3 ปลอก
+.
+#มือปืน #ยิงกันตาย #ข่าวอาชญากรรม`;
+$('#btnSample').onclick=()=>{ ta.value=SAMPLE; dismissed.clear(); run(); LS.set('pc_draft2',ta.value); toast('ใส่ข่าวตัวอย่างแล้ว (ข้อความสมมติ)'); };
+
+/* ---------- Theme toggle ---------- */
+const root=document.documentElement;
+const mq=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;
+const SUN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const MOON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
+function effTheme(){ const o=root.getAttribute('data-pc-theme'); if(o==='dark'||o==='light') return o; const a=root.getAttribute('data-theme'); if(a==='dark'||a==='light') return a; return mq&&mq.matches?'dark':'light'; }
+function paintThemeBtn(){ const t=effTheme(); $('#themeIcon').innerHTML=t==='dark'?MOON:SUN; $('#themeLabel').textContent=t==='dark'?'โหมดมืด':'โหมดสว่าง'; $('#btnTheme').title=t==='dark'?'เปลี่ยนเป็นโหมดสว่าง':'เปลี่ยนเป็นโหมดมืด'; }
+$('#btnTheme').onclick=()=>{ const next=effTheme()==='dark'?'light':'dark'; root.setAttribute('data-pc-theme',next); LS.set('pc_theme',next); paintThemeBtn(); };
+{ const saved=LS.get('pc_theme',null); if(saved==='dark'||saved==='light') root.setAttribute('data-pc-theme',saved);
+  new MutationObserver(paintThemeBtn).observe(root,{attributes:true,attributeFilter:['data-theme']}); if(mq&&mq.addEventListener) mq.addEventListener('change',paintThemeBtn); paintThemeBtn(); }
+
+/* ---------- Font size ---------- */
+const ZOOMS=[0.9,1,1.15,1.3,1.5,1.75];
+let zi=1; { const z=LS.get('pc_zoom',1); const k=ZOOMS.indexOf(z); if(k>=0) zi=k; }
+function applyZoom(){ const z=ZOOMS[zi]; document.documentElement.style.setProperty('--zoom',z); $('#fsVal').textContent=Math.round(z*100)+'%'; $('#fsDown').disabled=zi===0; $('#fsUp').disabled=zi===ZOOMS.length-1; LS.set('pc_zoom',z); bd.scrollTop=ta.scrollTop; }
+$('#fsDown').onclick=()=>{ if(zi>0){ zi--; applyZoom(); } };
+$('#fsUp').onclick=()=>{ if(zi<ZOOMS.length-1){ zi++; applyZoom(); } };
+const fsReset=()=>{ zi=1; applyZoom(); toast('กลับเป็นขนาดปกติ'); };
+$('#fsVal').onclick=fsReset; $('#fsVal').onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); fsReset(); } };
+applyZoom();
+
+/* ---------- Allowlist storage: shared db when available, else this browser ---------- */
+let allowDb=null;
+function renderAllow(){
+  const text=ta.value;
+  $('#allowCount').textContent=allowWords.length?`${allowWords.length} คำ`:'';
+  $('#allowChips').innerHTML=allowWords.length?allowWords.slice().sort((a,b)=>a.word.localeCompare(b.word,'th')).map(a=>{
+    const n=findAll(text,a.word).length;
+    return `<span class="chip">${esc(a.word)}${n?`<span class="hit">×${n}</span>`:''}<button type="button" data-rm="${esc(a.id)}" aria-label="ลบคำยกเว้น ${esc(a.word)}">×</button></span>`;
+  }).join(''):'<span class="f-cat">ยังไม่มีคำยกเว้น เพิ่มจากช่องด้านบน หรือกด "เพิ่มเป็นคำยกเว้น" ในรายการผลตรวจ</span>';
+  $('#allowStore').textContent=allowDb?'บันทึกไว้ในแอปนี้ ทุกคนที่เปิดลิงก์นี้ใช้รายการคำชุดเดียวกัน':'บันทึกไว้เฉพาะในเบราว์เซอร์นี้';
+}
+function saveLocalAllow(){ LS.set('pc_allow',allowWords.map(a=>a.word)); }
+async function addAllow(raw){
+  const word=String(raw||'').trim().replace(/\s+/g,' ');
+  if(!word){ toast('พิมพ์คำที่ต้องการยกเว้นก่อน'); return; }
+  if(word.length>60){ toast('คำยาวเกิน 60 ตัวอักษร'); return; }
+  if(allowWords.some(a=>a.word===word)){ toast(`"${word}" อยู่ในรายการแล้ว`); return; }
+  if(allowDb){
+    try{ const id='w'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+      allowWords.push({id,word}); run();
+      await allowDb.collection('allowlist').doc(id).set({word,addedAt:new Date().toISOString()});
+    }catch(e){ allowWords=allowWords.filter(a=>a.word!==word); run();
+      toast(e&&e.code==='permission_denied'?'คุณมีสิทธิ์ดูอย่างเดียว เพิ่มคำยกเว้นไม่ได้':'บันทึกไม่สำเร็จ ลองอีกครั้ง'); return; }
+  } else { allowWords.push({id:'l'+Date.now(),word}); saveLocalAllow(); run(); }
+  toast(`เพิ่ม "${word}" เป็นคำยกเว้นแล้ว`);
+}
+async function removeAllow(id){
+  const w=allowWords.find(a=>a.id===id); if(!w) return;
+  allowWords=allowWords.filter(a=>a.id!==id); run();
+  if(allowDb){ try{ await allowDb.collection('allowlist').doc(id).delete(); }catch(e){ allowWords.push(w); run(); toast('ลบไม่สำเร็จ'); return; } }
+  else saveLocalAllow();
+  toast(`ลบ "${w.word}" แล้ว`);
+}
+$('#allowForm').addEventListener('submit',e=>{ e.preventDefault(); const i=$('#allowInput'); addAllow(i.value); i.value=''; });
+$('#allowChips').addEventListener('click',e=>{ const b=e.target.closest('[data-rm]'); if(b) removeAllow(b.dataset.rm); });
+(async()=>{
+  try{ allowDb=window.claude&&window.claude.use?await window.claude.use('db'):null; }catch(e){ allowDb=null; }
+  if(!allowDb){ renderAllow(); return; }
+  allowDb.collection('allowlist').onSnapshot(snap=>{
+    allowWords=snap.docs.map(d=>({id:d.id,word:String((d.data()||{}).word||'')})).filter(a=>a.word);
+    run();
+  },()=>{ allowDb=null; allowWords=(LS.get('pc_allow',[])||[]).map((w,i)=>({id:'l'+i,word:String(w)})); run(); });
+})();
+
+/* ---------- Ready-to-use versions ---------- */
+// neutral replacements for risky wording (applied only where the scanner flags the exact phrase)
+const REPL={
+  'สภาพสุดสยอง':'','สุดสยอง':'','สยองขวัญ':'','สยดสยอง':'','อนาถ':'','เลือดสาด':'','นอนจมกองเลือด':'เสียชีวิต','จมกองเลือด':'เสียชีวิต',
+  'ภาพสยอง':'ภาพเหตุการณ์','คลิปสยอง':'คลิปเหตุการณ์','ศพเละ':'ผู้เสียชีวิต','ไส้ทะลัก':'ได้รับบาดเจ็บสาหัส','ไส้แตก':'ได้รับบาดเจ็บสาหัส',
+  'สมองกระจาย':'ได้รับบาดเจ็บสาหัส','สมองไหล':'ได้รับบาดเจ็บสาหัส','ไหม้เกรียม':'ถูกไฟไหม้','แหลกเหลว':'เสียหายอย่างหนัก','ร่างแหลก':'ได้รับบาดเจ็บสาหัส',
+  'ปลิดชีพตัวเอง':'เสียชีวิต','ปลิดชีวิตตัวเอง':'เสียชีวิต','ปลิดชีพ':'เสียชีวิต','จบชีวิตตัวเอง':'เสียชีวิต','คิดสั้น':'เสียชีวิต','ฆ่าตัวตายสำเร็จ':'เสียชีวิตจากการฆ่าตัวตาย','อัตวินิบาตกรรม':'การฆ่าตัวตาย',
+  'พวกต่างด้าว':'แรงงานข้ามชาติ','ต่างด้าวสกปรก':'แรงงานข้ามชาติ','ปัญญาอ่อน':'ผู้มีภาวะบกพร่องทางสติปัญญา','ผิดธรรมชาติ':'',
+  'ฆาตกร':'ผู้ต้องหา','ไอ้โจร':'คนร้าย',
+  'ช็อก':'','ช็อค':'','สุดช็อก':'','อึ้ง':'','ตะลึง':'','ห้ามพลาด':'','ดูให้จบ':'','คุณจะไม่เชื่อ':'','ดราม่าสนั่น':'','ร้อนฉ่า':'','แฉหมดเปลือก':'',
+  'ดูก่อนโดนลบ':'','รีบแชร์ด่วน':'','ก่อนโดนลบ':'','รีบแชร์':'','แชร์ด่วน':'','ส่งต่อด่วน':'','ส่งต่อให้มากที่สุด':'','แชร์ให้ถึง':'','กดไลก์':'','กดไลค์':'','กดแชร์':'','แท็กเพื่อน':'','อย่าลืมกดติดตาม':'',
+  'คลิปหลุด':'คลิปที่ถูกเผยแพร่โดยไม่ได้รับความยินยอม','ภาพหลุด':'ภาพที่ถูกเผยแพร่โดยไม่ได้รับความยินยอม',
+};
+function cleanup(t){
+  return t.replace(/[ \t]{2,}/g,' ').replace(/ +([,.!?)”])/g,'$1').replace(/([(“]) +/g,'$1')
+    .replace(/^[ \t]+|[ \t]+$/gm,'').replace(/^[!?,]+\s*/gm,'').replace(/\n{3,}/g,'\n\n').trim();
+}
+function autoFix(src){
+  let applied=0;
+  let t=src.replace(/(?:กด(?:ไลก์|ไลค์|แชร์|ติดตาม)\s?)+(?:เป็นกำลังใจ(?:ให้)?(?:ทีมงาน)?(?:ด้วย)?(?:นะ)?(?:คะ|ค่ะ|ครับ|จ้า)?)?/g,()=>{applied++;return '';});
+  t=t.replace(/\s*!{1,}(?=\s|$)/g,m=>{applied++;return '';});
+  for(let pass=0;pass<3;pass++){
+    const fs=scan(t).filter(f=>f.start>=0 && (f.replace!==undefined || (f.kind==='risk' && Object.prototype.hasOwnProperty.call(REPL,f.text))));
+    if(!fs.length) break;
+    fs.sort((a,b)=>b.start-a.start);
+    let lastStart=Infinity;
+    for(const f of fs){ if(f.end>lastStart) continue; const rep=f.replace!==undefined?f.replace:REPL[f.text]; t=t.slice(0,f.start)+rep+t.slice(f.end); lastStart=f.start; applied++; }
+    t=cleanup(t);
+  }
+  return {text:t,applied};
+}
+function residual(t){
+  return scan(t).filter(f=>!(f.kind==='lang' && f.sev===1 && (f.cat==='style'||f.cat==='format') && f.start<0)).filter(f=>f.kind==='lang'||f.sev>=2);
+}
+function highlightVersion(body,res){
+  const marks=res.concat(scan(body).filter(f=>f.cat==='reach')).filter(f=>f.start>=0);
+  const n=body.length; const lv=new Int8Array(n), lg=new Uint8Array(n), rc=new Uint8Array(n); const why=new Array(n);
+  const kinds=new Set();
+  for(const f of marks){
+    const k=f.kind==='lang'?'lang':f.cat==='reach'?'reach':'risk'; kinds.add(k);
+    const label=(f.kind==='lang'?'ภาษา: ':f.cat==='reach'?'กระทบการมองเห็น/โฆษณา: ':(CATS[f.cat]||CATS.other).name+': ')+(f.why||'')+(f.replace!==undefined&&f.replace!==''?' → '+f.replace:'');
+    for(let i=f.start;i<Math.min(f.end,n);i++){ if(k==='lang') lg[i]=1; else if(k==='reach') rc[i]=1; else lv[i]=Math.max(lv[i],f.sev); why[i]=why[i]&&!why[i].includes(label)?why[i]+'\n'+label:(why[i]||label); }
+  }
+  let html='',i=0;
+  while(i<n){ let j=i+1; while(j<n && lv[j]===lv[i] && lg[j]===lg[i] && rc[j]===rc[i] && why[j]===why[i]) j++;
+    const chunk=esc(body.slice(i,j));
+    const cls=[lv[i]?'s'+lv[i]:'',lg[i]?'lg':'',(!lv[i]&&rc[i])?'rc':''].filter(Boolean).join(' ');
+    html+=cls?`<mark class="${cls}" title="${esc(why[i]||'')}">${chunk}</mark>`:chunk; i=j; }
+  return {html,kinds};
+}
+function verCard(i,title,sub,body,opts={}){
+  const res=body?residual(body):[];
+  const risk=res.filter(f=>f.kind==='risk'), lang=res.filter(f=>f.kind==='lang');
+  const badge=!body?'':(res.length?`<span class="check left">ตรวจซ้ำ: ยังเหลือ ${risk.length?risk.length+' จุดเสี่ยง':''}${risk.length&&lang.length?' · ':''}${lang.length?lang.length+' จุดภาษา':''}</span>`:'<span class="check pass">ตรวจซ้ำแล้ว ไม่พบจุดที่ต้องแก้</span>');
+  const rch=body?[...new Set(scan(body).filter(f=>f.cat==='reach').map(f=>f.text))]:[];
+  const rchBadge=rch.length?`<span class="check reach" title="${esc(rch.join(', '))}">คำกระทบการมองเห็น ${rch.length} คำ</span>`:'';
+  const hl=body?highlightVersion(body,res):{html:'',kinds:new Set()};
+  const key=hl.kinds.size?`<div class="ver-key">${hl.kinds.has('risk')?'<span><i style="background:var(--high-mark);box-shadow:inset 0 -2px 0 var(--high)"></i>เสี่ยงสูง</span><span><i style="background:var(--warn-mark);box-shadow:inset 0 -2px 0 var(--warn)"></i>ควรปรับ</span>':''}${hl.kinds.has('lang')?'<span><i style="box-shadow:inset 0 -2px 0 var(--pencil)"></i>จุดภาษา</span>':''}${hl.kinds.has('reach')?'<span><i style="background:var(--reach-mark);box-shadow:inset 0 -2px 0 var(--reach)"></i>คำกระทบการมองเห็น/โฆษณา</span>':''}<span>· ชี้ที่คำเพื่อดูเหตุผล</span></div>`:'';
+  const left=res.length?`<div class="ver-note">ต้องแก้เอง: ${res.slice(0,6).map(f=>`"${esc(f.text.length>30?f.text.slice(0,30)+'…':f.text)}"`).join(', ')}${res.length>6?' …':''}</div>`:'';
+  return `<div class="ver"><div class="ver-h"><h3>${esc(title)}<small>${esc(sub)}</small></h3><span style="display:flex;gap:6px;flex-wrap:wrap">${badge}${rchBadge}</span></div>
+    <div class="ver-b${body?'':' placeholder'}">${body?hl.html:opts.placeholder||''}</div>${key}
+    ${opts.note?`<div class="ver-note">${esc(opts.note)}</div>`:''}${left}
+    ${body?`<div class="ver-f"><span class="f-cat">${[...body].length.toLocaleString()} ตัวอักษร · X ${xCount(body)} / 280</span><div class="btns"><button type="button" class="btn" data-vcopy="${i}">คัดลอก</button><button type="button" class="btn" data-vuse="${i}">ใช้ฉบับนี้</button></div></div>`:''}</div>`;
+}
+const CUT=new Set(['hate','violent','privacy','child','terror','weapons','scam','sexual','harass','profanity']);
+function neutralVersion(src){
+  const base=autoFix(src).text; const removed=[];
+  const lines=base.split('\n').map(line=>{
+    if(!line.trim()) return line;
+    const all=scan(line); const fs=all.filter(f=>f.kind==='risk'&&f.start>=0&&((CUT.has(f.cat)&&f.sev>=2)||f.cat==='privacy'||(f.cat==='selfharm'&&f.sev>=3)));
+    const tagRisk=all.filter(f=>f.kind==='risk'&&f.start>=0&&f.cat!=='law');
+    if(!fs.length&&!tagRisk.some(f=>f.inTag)) return line;
+    const parts=line.split(/(\s+)/); const keep=[]; let pos=0;
+    parts.forEach((c,k)=>{ const s0=pos,e0=pos+c.length; pos=e0;
+      if(k%2===1){ keep.push(c); return; }
+      if(fs.some(f=>f.start<e0&&f.end>s0) || (c.startsWith('#') && tagRisk.some(f=>f.start<e0&&f.end>s0))){
+        removed.push(c);
+        if(keep.length>=2 && /(?:ติดต่อ|โทร|เบอร์|แจ้ง|ได้ที่|อีเมล|ว่า)$/.test(keep[keep.length-2])){ removed.push(keep[keep.length-2]); keep.splice(keep.length-2,2); }
+        else keep.push('');
+      } else keep.push(c);
+    });
+    return keep.join('');
+  });
+  let t=cleanup(lines.join('\n')).replace(/(\n\.\s*)+$/,'');
+  t=t.replace(/มือปืน(?!\S*#)/g,'ผู้ก่อเหตุ');
+  const orig=scan(src);
+  if(orig.some(f=>f.cat==='graphic'&&f.start>=0) && !/คำเตือน/.test(t)){ const ls=t.split('\n'); ls.splice(1,0,'คำเตือน: เนื้อหามีรายละเอียดเกี่ยวกับความรุนแรง'); t=ls.join('\n'); }
+  if(orig.some(f=>f.cat==='selfharm') && !/1323/.test(t)) t+='\n\nหากคุณหรือคนใกล้ชิดต้องการความช่วยเหลือ โทรสายด่วนสุขภาพจิต 1323 ได้ตลอด 24 ชั่วโมง';
+  return {text:t,removed};
+}
+function shortVersion(v2,src){
+  const tags=(v2.match(/#[^\s#]+/g)||[]).slice(0,2);
+  const lines=v2.replace(/#[^\s#]+/g,'').split('\n').filter(l=>l.trim()&&l.trim()!=='.'&&!/^คำเตือน/.test(l)&&!/1323/.test(l));
+  const needHot=/1323/.test(v2); const tail=(needHot?'\nสายด่วนสุขภาพจิต 1323':'')+(tags.length?'\n'+tags.join(' '):'');
+  const MAXX=270-xCount(tail);
+  const fits=s=>xCount(s)<=MAXX && graphemes(s)<=290-graphemes(tail);
+  const headW=(lines[0]||'').split(/\s+/).filter(Boolean);
+  let out='';
+  for(const w of headW){ const n=out?out+' '+w:w; if(!fits(n)) break; out=n; }
+  const body=lines.slice(1).join(' ').split(/\s+/).filter(Boolean);
+  let first=true, dropped=0;
+  for(const w of body){ const n=out+(first?'\n':' ')+w; if(!fits(n)){ dropped++; continue; } if(dropped) break; out=n; first=false; }
+  return {text:(out+tail).trim()};
+}
+let versBodies=[];
+function renderVersions(){
+  const text=ta.value;
+  if(!text.trim()){ $('#vers').innerHTML='<div class="empty">วางข่าวในช่องต้นฉบับ แล้วฉบับแก้จะขึ้นที่นี่</div>'; versBodies=[]; return; }
+  const fx=autoFix(text), v2=neutralVersion(text), v3=shortVersion(v2.text,text);
+  versBodies=[fx.text,v2.text,v3.text];
+  const rm=v2.removed.map(x=>x.replace(/^["“]+|["”]+$/g,'')).filter(x=>x.trim());
+  $('#vers').innerHTML=
+    verCard(0,'ฉบับ 1 · แก้อัตโนมัติ','คงเนื้อความเดิม แก้เฉพาะจุด',fx.text===text&&!fx.applied?'':fx.text,{note:fx.applied?`แก้ ${fx.applied} จุด: ตัวสะกด ไวยากรณ์ คำเร้าอารมณ์ และคำบรรยายรุนแรงที่มีคำกลางใช้แทนได้`:'',placeholder:'ไม่มีจุดที่แก้อัตโนมัติได้'})+
+    verCard(1,'ฉบับ 2 · ตัดส่วนเสี่ยง','Facebook · Instagram · YouTube',v2.text,{note:(rm.length?`ต่อจากฉบับ 1 และตัดออก ${rm.length} ส่วน: ${rm.slice(0,4).map(x=>'"'+(x.length>28?x.slice(0,28)+'…':x)+'"').join(', ')}${rm.length>4?' …':''}`:'ต่อจากฉบับ 1 ไม่มีส่วนที่ต้องตัด')+(v2.text!==fx.text&&/คำเตือน|1323/.test(v2.text)?' · เพิ่มคำเตือนหรือสายด่วนตามประเภทข่าว':'')})+
+    verCard(2,'ฉบับ 3 · ฉบับสั้น','X · Bluesky · TikTok (ไม่เกิน 280)',v3.text,{note:'ย่อจากฉบับ 2 ตัดท้ายตรงช่องว่างระหว่างประโยค'+(/คำเตือน/.test(v2.text)?' · บน X ให้ติ๊กตั้งค่า "สื่อละเอียดอ่อน" เมื่อแนบภาพ':'')});
+}
+$('#vers').addEventListener('click',async e=>{
+  const c=e.target.closest('[data-vcopy]'), u=e.target.closest('[data-vuse]');
+  if(c){ const t=versBodies[+c.dataset.vcopy]; if(!t) return; try{ await navigator.clipboard.writeText(t); toast('คัดลอกแล้ว'); }catch(err){ const b=c.closest('.ver').querySelector('.ver-b'); const r=document.createRange(); r.selectNodeContents(b); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast('เลือกข้อความแล้ว กด Ctrl/⌘+C เพื่อคัดลอก'); } }
+  if(u){ const t=versBodies[+u.dataset.vuse]; if(!t) return; ta.value=t; LS.set('pc_draft2',t); dismissed.clear(); run(); ta.scrollIntoView({block:'nearest',behavior:'smooth'}); toast('ใส่ฉบับนี้ในช่องต้นฉบับแล้ว'); }
+});
+
+/* ---------- Settings: what to show on next open ---------- */
+function openSettings(){ const mode=LS.get('pc_start','last'); const r=document.querySelector(`input[name="startMode"][value="${mode}"]`)||$('#st-last'); r.checked=true; $('#setm').hidden=false; document.body.style.overflow='hidden'; setTimeout(()=>r.focus(),0); }
+function closeSettings(){ $('#setm').hidden=true; document.body.style.overflow=''; $('#btnSettings').focus(); }
+$('#btnSettings').onclick=openSettings;
+$('#setClose').onclick=closeSettings;
+$('#setm').addEventListener('click',e=>{ if(e.target.id==='setm') closeSettings(); });
+$('#setm').addEventListener('keydown',e=>{ if(e.key==='Escape'){ e.preventDefault(); closeSettings(); } });
+document.querySelectorAll('input[name="startMode"]').forEach(r=>r.addEventListener('change',()=>{ LS.set('pc_start',r.value); toast('บันทึกแล้ว: เปิดครั้งถัดไปจะแสดง'+({last:'ข้อความล่าสุด',sample:'ข่าวตัวอย่าง',blank:'หน้าว่าง'}[r.value])); }));
+
+/* ---------- Monthly guideline updates (db: config/status, pending, rules, rejected) ---------- */
+let updDb=null, isEditor=false, pendList=[], actList=[], upStatus=null, uTab='pend';
+const thDate=iso=>{ try{ return new Date(iso).toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'numeric'}); }catch(e){ return String(iso||''); } };
+const thMonth=iso=>{ try{ return new Date(iso).toLocaleDateString('th-TH',{month:'short',year:'numeric'}); }catch(e){ return ''; } };
+function toRule(id,d){
+  const term=String(d.term||'').trim(); if(term.length<2||term.length>60) return null;
+  const c=CATS[d.cat]&&d.cat!=='other'?d.cat:'reach'; const sv=Math.min(3,Math.max(1,parseInt(d.sev)||1));
+  return {id:'u'+id,dyn:true,c,s:sv,t:[term],w:String(d.why||'คำจากการอัปเดตแนวทางรายเดือน'),law:d.law?String(d.law):undefined};
+}
+function sevName(c,sv){ return c==='reach'?'กระทบการมองเห็น/โฆษณา':['','ข้อสังเกต','ควรปรับ','เสี่ยงสูง'][sv]||''; }
+function pendCard(d,mode){
+  const c=CATS[d.cat]?d.cat:'reach'; const sv=Math.min(3,Math.max(1,parseInt(d.sev)||1));
+  const plats=Array.isArray(d.platforms)?d.platforms.filter(x=>PL[x]).map(x=>PL[x].name).join(', '):'';
+  const src=d.sourceUrl&&/^https:\/\//.test(d.sourceUrl)?`<div class="src">อ้างอิง: <a href="${esc(d.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(d.sourceTitle||d.sourceUrl)} ↗</a></div>`:'';
+  const acts=mode==='pend'?(isEditor?`<div class="pend-act"><button type="button" class="btn ok" data-appr="${esc(d._id)}">อนุมัติ ใช้คำนี้</button><button type="button" class="btn" data-rej="${esc(d._id)}">ไม่ใช้</button></div>`:''):(isEditor?`<div class="pend-act"><button type="button" class="btn" data-off="${esc(d._id)}">เลิกใช้คำนี้</button></div>`:'');
+  return `<div class="pend ${c==='reach'?'rc':'s'+sv}"><div class="pend-top"><span class="pend-term">${esc(String(d.term||''))}</span><span class="f-cat">${esc(CATS[c].name)} · ${sevName(c,sv)}</span></div>
+    ${d.why?`<p>${esc(String(d.why))}</p>`:''}${d.change?`<p style="color:var(--muted)">การเปลี่ยนแปลง: ${esc(String(d.change))}</p>`:''}
+    ${plats?`<div class="src">แพลตฟอร์ม: ${esc(plats)}</div>`:''}${src}
+    <div class="src">${mode==='pend'?'เสนอเมื่อ '+thDate(d.proposedAt):'อนุมัติเมื่อ '+thDate(d.approvedAt)}</div>${acts}</div>`;
+}
+function renderUpdates(){
+  if(!updDb) return;
+  $('#updPanel').hidden=false;
+  const st=upStatus||{};
+  if(st.lastChecked){ $('#stamp').textContent='อ้างอิงแนวทาง ณ '+(st.stampLabel||thMonth(st.lastChecked)); $('#stamp').title='ตรวจแนวทางล่าสุดเมื่อ '+thDate(st.lastChecked); }
+  $('#updWhen').textContent=st.lastChecked?'ตรวจล่าสุด '+thDate(st.lastChecked)+(st.nextCheck?' · ครั้งถัดไป '+thDate(st.nextCheck):''):'';
+  $('#updSum').innerHTML=st.summary?`<b>สรุปรอบล่าสุด:</b> ${esc(String(st.summary))}`:'<span class="none">ยังไม่มีผลการตรวจรายเดือน ระบบจะตรวจแนวทางของทั้ง 6 แพลตฟอร์มทุกวันที่ 1 ของเดือน แล้วเสนอคำเสี่ยงใหม่มาให้อนุมัติที่นี่</span>';
+  const changes=Array.isArray(st.changes)?st.changes:[];
+  $('#nPend').textContent=pendList.length; $('#nAct').textContent=actList.length; $('#nLog').textContent=changes.length;
+  $('#uTabPend').setAttribute('aria-selected',uTab==='pend'); $('#uTabAct').setAttribute('aria-selected',uTab==='act'); $('#uTabLog').setAttribute('aria-selected',uTab==='log');
+  let html='';
+  if(uTab==='pend') html=pendList.length?pendList.map(d=>pendCard(d,'pend')).join(''):'<div class="empty">ไม่มีคำที่รออนุมัติ</div>';
+  else if(uTab==='act') html=actList.length?actList.map(d=>pendCard(d,'act')).join(''):'<div class="empty">ยังไม่มีคำจากการอัปเดตที่อนุมัติแล้ว</div>';
+  else html=changes.length?changes.map(c=>`<div class="chg"><b>${esc(String(c.platform||''))}</b>${c.date?` · ${thDate(c.date)}`:''}${c.title?` — ${esc(String(c.title))}`:''}<br>${esc(String(c.text||''))}${c.url&&/^https:\/\//.test(c.url)?` <a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">อ่านต้นฉบับ ↗</a>`:''}</div>`).join(''):'<div class="empty">รอบล่าสุดไม่พบการเปลี่ยนแปลงของแนวทาง</div>';
+  $('#updList').innerHTML=html;
+  $('#updRole').textContent=isEditor?'คุณเป็นบรรณาธิการของแอปนี้ อนุมัติหรือเลิกใช้คำได้ คำที่อนุมัติจะมีผลกับทุกคนที่เปิดลิงก์ทันที':'เฉพาะคนที่มีสิทธิ์แก้ไขแอป (Can edit) อนุมัติคำได้ คำที่อนุมัติแล้วจะถูกใช้ตรวจทันที';
+}
+function setUTab(t){ uTab=t; renderUpdates(); }
+$('#uTabPend').onclick=()=>setUTab('pend'); $('#uTabAct').onclick=()=>setUTab('act'); $('#uTabLog').onclick=()=>setUTab('log');
+async function approvePending(id){
+  const d=pendList.find(x=>x._id===id); if(!d) return;
+  const {_id,...body}=d;
+  try{ await updDb.collection('rules').doc(id).set({...body,approvedAt:new Date().toISOString()}); await updDb.collection('pending').doc(id).delete(); toast(`อนุมัติ "${d.term}" แล้ว มีผลกับทุกคนทันที`); }
+  catch(e){ toast('อนุมัติไม่สำเร็จ ต้องมีสิทธิ์แก้ไขแอป (Can edit)'); }
+}
+async function rejectPending(id){
+  const d=pendList.find(x=>x._id===id); if(!d) return;
+  try{ await updDb.collection('rejected').doc(id).set({term:d.term,cat:d.cat,rejectedAt:new Date().toISOString()}); await updDb.collection('pending').doc(id).delete(); toast(`ไม่ใช้ "${d.term}" ระบบจะไม่เสนอคำนี้อีก`); }
+  catch(e){ toast('บันทึกไม่สำเร็จ ต้องมีสิทธิ์แก้ไขแอป (Can edit)'); }
+}
+async function retireRule(id){
+  const d=actList.find(x=>x._id===id); if(!d) return;
+  try{ await updDb.collection('rejected').doc(id).set({term:d.term,cat:d.cat,rejectedAt:new Date().toISOString()}); await updDb.collection('rules').doc(id).delete(); toast(`เลิกใช้ "${d.term}" แล้ว`); }
+  catch(e){ toast('บันทึกไม่สำเร็จ ต้องมีสิทธิ์แก้ไขแอป (Can edit)'); }
+}
+$('#updList').addEventListener('click',e=>{
+  const a=e.target.closest('[data-appr]'), r=e.target.closest('[data-rej]'), o=e.target.closest('[data-off]');
+  if(a) approvePending(a.dataset.appr);
+  if(r){ const d=pendList.find(x=>x._id===r.dataset.rej); openConfirm({title:'ไม่ใช้คำนี้?',desc:`"${d?d.term:''}" จะถูกนำออกจากรายการรออนุมัติ และระบบจะไม่เสนอคำนี้อีกในรอบถัดไป`,ok:'ตกลง ไม่ใช้',onOk:()=>rejectPending(r.dataset.rej)}); }
+  if(o){ const d=actList.find(x=>x._id===o.dataset.off); openConfirm({title:'เลิกใช้คำนี้?',desc:`ตัวตรวจจะไม่เตือนคำว่า "${d?d.term:''}" อีก สำหรับทุกคนที่เปิดลิงก์นี้`,ok:'ตกลง เลิกใช้',onOk:()=>retireRule(o.dataset.off)}); }
+});
+(async()=>{
+  try{ updDb=window.claude&&window.claude.use?await window.claude.use('db'):null; }catch(e){ updDb=null; }
+  if(!updDb) return;
+  try{ const u=await window.claude.use('user'); isEditor=u?!!(await u.canEdit()):false; }catch(e){ isEditor=false; }
+  const docs=snap=>snap.docs.map(d=>({...(d.data()||{}),_id:d.id}));
+  updDb.doc('config/status').onSnapshot(sn=>{ upStatus=sn.exists?sn.data():null; renderUpdates(); },()=>{});
+  updDb.collection('pending').onSnapshot(sn=>{ pendList=docs(sn).sort((a,b)=>String(b.proposedAt||'').localeCompare(String(a.proposedAt||''))); renderUpdates(); },()=>{});
+  updDb.collection('rules').onSnapshot(sn=>{ actList=docs(sn).sort((a,b)=>String(b.approvedAt||'').localeCompare(String(a.approvedAt||''))); DYN_RULES=actList.map(d=>toRule(d._id,d)).filter(Boolean); renderUpdates(); run(); },()=>{});
+  renderUpdates();
+})();
+
+/* ---------- Init ---------- */
+{ const la=LS.get('pc_allow',[]); if(Array.isArray(la)) allowWords=la.map((w,i)=>({id:'l'+i,word:String(w)})).filter(a=>a.word); }
+const savedP=LS.get('pc_plats',null); if(Array.isArray(savedP)&&savedP.length) enabled=new Set(savedP.filter(x=>PL[x]));
+renderPlats();
+{ const mode=LS.get('pc_start','last'); const draft=LS.get('pc_draft2',null);
+  ta.value = mode==='blank' ? '' : mode==='sample' ? SAMPLE : (draft===null ? SAMPLE : String(draft)); }
+run();
+})();
+</script>
+
+</body></html>
