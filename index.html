@@ -220,7 +220,9 @@ details.more a{color:var(--pencil)}
 .fs .big{font-size:16px}
 .fs output{font:500 12px var(--f-mono);color:var(--muted);min-width:44px;text-align:center;border-left:1px solid var(--line);border-right:1px solid var(--line);padding:6px 4px;cursor:pointer}
 .col{display:flex;flex-direction:column;gap:20px;min-width:0}
-.top-r{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.top-r{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;align-self:flex-start}
+@media (min-width:901px){header.top{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start}.top-r{max-width:760px}}
+@media (max-width:900px){.top-r{justify-content:flex-start}}
 .theme-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:5px 12px 5px 6px;font:500 13px var(--f-body);cursor:pointer}
 .theme-btn .knob{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--pencil-bg);color:var(--pencil)}
 .theme-btn svg{width:14px;height:14px}
@@ -330,6 +332,18 @@ details.more a{color:var(--pencil)}
 .vis-note{display:block;color:var(--muted);font-size:12.5px;line-height:1.5;margin-top:6px}
 .modal-box{max-height:calc(100vh - 32px);overflow-y:auto}
 @media (max-width:420px){.vis-grid{grid-template-columns:1fr}}
+.ver-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;padding:5px 11px;font:500 12.5px var(--f-mono);cursor:pointer}
+.ver-btn:hover{color:var(--ink);border-color:var(--muted)}
+.ver-new{font:600 10.5px var(--f-body);background:var(--pencil);color:var(--on-pencil);border-radius:999px;padding:1px 7px}
+.log-box{width:min(560px,100%)}
+.log-list{display:flex;flex-direction:column;gap:14px;margin-top:12px}
+.log-item{border-left:3px solid var(--line);padding-left:12px}
+.log-item.cur{border-left-color:var(--pencil)}
+.log-h{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.log-h b{font:600 14px var(--f-mono)}
+.log-h span{font-size:12.5px;color:var(--muted)}
+.log-h em{font-style:normal;font-size:11px;font-weight:600;color:var(--pencil);background:var(--pencil-bg);border-radius:4px;padding:0 6px}
+.log-item ul{margin:4px 0 0;padding-left:18px;font-size:13.5px;line-height:1.6}
 .btn.danger{background:var(--high);border-color:var(--high);color:var(--surface)}
 .btn.danger:hover{filter:brightness(1.07)}
 @media (prefers-reduced-motion:no-preference){.modal:not([hidden]) .modal-box{animation:pop .14s ease-out}@keyframes pop{from{transform:scale(.97);opacity:.6}to{transform:none;opacity:1}}}
@@ -419,6 +433,7 @@ kbd{font:600 12px var(--f-mono);border:1px solid var(--line);border-bottom-width
       </div>
       <button type="button" class="theme-btn" id="btnSettings" aria-haspopup="dialog"><span class="knob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span><span>ตั้งค่า</span></button>
       <button type="button" class="theme-btn" id="btnTheme" aria-label="สลับโหมดสว่างหรือมืด"><span class="knob" id="themeIcon"></span><span id="themeLabel">โหมดมืด</span></button>
+      <button type="button" class="ver-btn" id="btnVer" aria-haspopup="dialog" title="ดูสิ่งที่เปลี่ยนในแต่ละเวอร์ชัน"><span id="verTxt">v</span><span class="ver-new" id="verNew" hidden>ใหม่</span></button>
     </div>
   </header>
 
@@ -585,6 +600,14 @@ kbd{font:600 12px var(--f-mono);border:1px solid var(--line);border-bottom-width
     <textarea id="pasteBox" class="paste-box" aria-label="ช่องรับข้อความที่วาง" placeholder="วางข้อความที่นี่"></textarea>
     <p class="set-note" id="pasteNote"></p>
     <div class="modal-act"><button type="button" class="btn" id="pasteCancel">ยกเลิก</button></div>
+  </div>
+</div>
+<div class="modal" id="logm" hidden>
+  <div class="modal-box log-box" role="dialog" aria-modal="true" aria-labelledby="logTitle">
+    <h3 id="logTitle">สิ่งที่เปลี่ยนในแต่ละเวอร์ชัน</h3>
+    <p class="set-note" id="logSub" style="margin-top:2px!important"></p>
+    <div class="log-list" id="logList"></div>
+    <div class="modal-act"><button type="button" class="btn primary" id="logClose">ปิด</button></div>
   </div>
 </div>
 <div class="modal" id="setm" hidden>
@@ -1758,6 +1781,40 @@ $('#btnClean').onclick=()=>{
   setText(r.text, cleanMsg(r)||'จัดบรรทัดว่างให้เรียบร้อยแล้ว');
 };
 
+/* ---------- Version + changelog ---------- */
+const APP_VERSION='1.3.0';
+const CHANGELOG=[
+  {v:'1.3.0',d:'2026-09-25',items:['แสดงเลขเวอร์ชันมุมขวาบน และกดดูประวัติการเปลี่ยนแปลงได้']},
+  {v:'1.2.2',d:'2026-09-24',items:['ปุ่ม "กรองข้อความ" ลบข้อความแนบท้ายอย่าง "... สามารถติดตามต่อได้ที่ : ลิงก์" ได้แม้อยู่บรรทัดเดียวกับเนื้อข่าว','เตือนเมื่อเว็บต้นทางอาจตัดข้อความที่คัดลอกให้สั้นลง','เปลี่ยนชื่อปุ่ม "กรองขยะจากเว็บ" เป็น "กรองข้อความ"']},
+  {v:'1.2.1',d:'2026-09-24',items:['ซ่อนแพลตฟอร์มที่ไม่ใช้ได้ในเมนูตั้งค่า','เพิ่มคำอธิบายวิธีใช้คีย์เวิร์ดหลัก และปุ่มไปแท็บ SEO']},
+  {v:'1.2.0',d:'2026-09-24',items:['ตรวจโฆษณาอาหาร ยา เครื่องสำอาง ตาม พ.ร.บ.ยา พ.ร.บ.อาหาร พ.ร.บ.เครื่องสำอาง และหลักเกณฑ์ของ อย.','เลิกตรวจความยาวลิงก์ (slug) เพราะลิงก์ของเว็บเป็นเลขบทความ']},
+  {v:'1.1.1',d:'2026-09-24',items:['ปลั๊กอินดึงโปรยจาก ACF field custom_excerpt']},
+  {v:'1.1.0',d:'2026-09-24',items:['ปลั๊กอิน WordPress: เมนู "ด่านตรวจโพสต์" ในหลังบ้าน และปุ่ม "ตรวจก่อนโพสต์" ในรายการบทความ','ดึงพาดหัว โปรย เนื้อหา meta description และคีย์เวิร์ดเดิมจากฐานข้อมูล WordPress โดยตรง']},
+  {v:'1.0.0',d:'2026-09-24',items:['เว็บไซต์เป็นแพลตฟอร์มหลัก แสดงเป็นอันดับแรก','แยกแถว "โฆษณาและคุ้มครองผู้บริโภค" ออกจากเว็บไซต์','ดึงข่าวจากลิงก์','แนะนำคีย์เวิร์ดหลักจากเนื้อหา']},
+  {v:'0.9.0',d:'2026-09-24',items:['เพิ่มแพลตฟอร์มเว็บไซต์ (WordPress) ตรวจตามกฎหมายไทย: หมิ่นประมาท พ.ร.บ.คอมฯ PDPA ลิขสิทธิ์ คุ้มครองเด็ก','ตรวจโฆษณาเกินจริงตาม พ.ร.บ.คุ้มครองผู้บริโภค','เพิ่มแท็บ SEO เว็บไซต์']},
+  {v:'0.8.0',d:'2026-09-24',items:['ปุ่ม "วาง" และกรองโฆษณากับลิงก์แนบท้ายอัตโนมัติเมื่อวาง','ปรับข้อความป้ายในฉบับแก้พร้อมใช้ให้เข้าใจง่ายขึ้น','ย้ายคำอธิบายสีไว้ใต้ช่องต้นฉบับ']},
+  {v:'0.7.0',d:'2026-09-23',items:['ระบบอัปเดตแนวทางรายเดือนแบบให้บรรณาธิการอนุมัติ','ลิงก์ไปหน้าแนวทางของแต่ละแพลตฟอร์ม','ตั้งค่าหน้าที่เปิดครั้งถัดไป และจำโหมดสว่าง/มืด']},
+  {v:'0.6.0',d:'2026-09-23',items:['หน้าต่างยืนยันก่อนล้างข้อความ','ปุ่มปรับขนาดตัวอักษร','ไฮไลต์คำที่ต้องแก้ในฉบับแก้พร้อมใช้','แก้ปัญหากล่องผลตรวจเลื่อนไปทางขวาได้']},
+  {v:'0.5.0',d:'2026-09-23',items:['สีประจำแต่ละแพลตฟอร์ม','YouTube แยกลิมิตชื่อคลิปกับคำอธิบาย','คำเตือนคำที่กระทบการมองเห็นและโฆษณา','เครื่องหมาย ¶ บอกจุดที่เกินลิมิต']},
+  {v:'0.4.0',d:'2026-09-23',items:['ตารางลิมิตความยาวของแต่ละแพลตฟอร์ม','คำอธิบายเมื่อชี้ที่ระดับความเสี่ยง','ฉบับแก้พร้อมใช้ทำงานในหน้าเว็บ ไม่ใช้ AI']},
+  {v:'0.3.0',d:'2026-09-23',items:['โหมดสว่าง/มืด','รายการคำยกเว้น','ฉบับแก้พร้อมใช้ 3 ฉบับ']},
+  {v:'0.1.0',d:'2026-09-23',items:['เวอร์ชันแรก: ตรวจคำเสี่ยงตามแนวทางของ 6 แพลตฟอร์ม และตรวจตัวสะกดภาษาไทย']},
+];
+const verCmp=(a,b)=>{ const x=String(a).split('.').map(Number), y=String(b).split('.').map(Number); for(let i=0;i<3;i++){ if((x[i]||0)!==(y[i]||0)) return (x[i]||0)-(y[i]||0); } return 0; };
+function renderVerBtn(){ const seen=LS.get('pc_seen_ver',null); $('#verTxt').textContent='v'+APP_VERSION; $('#verNew').hidden=!(seen&&verCmp(APP_VERSION,seen)>0); }
+function openLog(){
+  const seen=LS.get('pc_seen_ver',null);
+  $('#logSub').textContent=`เวอร์ชันปัจจุบัน ${APP_VERSION} · อัปเดตล่าสุด ${thDate(CHANGELOG[0].d)}`;
+  $('#logList').innerHTML=CHANGELOG.map(c=>`<div class="log-item${c.v===APP_VERSION?' cur':''}"><div class="log-h"><b>v${c.v}</b><span>${thDate(c.d)}</span>${c.v===APP_VERSION?'<em>ปัจจุบัน</em>':(seen&&verCmp(c.v,seen)>0?'<em>ใหม่</em>':'')}</div><ul>${c.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div>`).join('');
+  $('#logm').hidden=false; document.body.style.overflow='hidden'; LS.set('pc_seen_ver',APP_VERSION); renderVerBtn(); setTimeout(()=>{ $('#logClose').focus({preventScroll:true}); document.querySelector('#logm .modal-box').scrollTop=0; },0);
+}
+function closeLog(){ $('#logm').hidden=true; document.body.style.overflow=''; $('#btnVer').focus(); }
+$('#btnVer').onclick=openLog; $('#logClose').onclick=closeLog;
+$('#logm').addEventListener('click',e=>{ if(e.target.id==='logm') closeLog(); });
+$('#logm').addEventListener('keydown',e=>{ if(e.key==='Escape'){ e.preventDefault(); closeLog(); } });
+if(LS.get('pc_seen_ver',null)===null) LS.set('pc_seen_ver',APP_VERSION); // first visit: nothing is "new"
+renderVerBtn();
+
 /* ---------- Settings: what to show on next open ---------- */
 function renderVis(){ $('#visGrid').innerHTML=PLATS_ALL.map(p=>`<label class="vis" style="--pc:var(--c-${p.id})"><input type="checkbox" data-vis="${p.id}" ${hiddenPlats.has(p.id)?'':'checked'}><span class="dot">${p.short}</span><span>${esc(p.name)}</span></label>`).join(''); }
 $('#visGrid').addEventListener('change',e=>{ const c=e.target.closest('[data-vis]'); if(!c) return; const id=c.dataset.vis;
@@ -1855,5 +1912,4 @@ renderPlats();
 run();
 })();
 </script>
-
 </body></html>
